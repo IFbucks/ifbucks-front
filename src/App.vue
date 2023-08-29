@@ -1,11 +1,10 @@
 <script setup>
-import loginComp from './components/loginComp.vue';
+import HomeView from './views/HomeView.vue';
 </script>
 
 <template>
  
-<loginComp />
-
+<HomeView />
 </template>
 
 <style scoped>

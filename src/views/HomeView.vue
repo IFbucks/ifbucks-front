@@ -1,10 +1,9 @@
-<script>
+<script setup>
+import loginCompVue from "../components/loginComp.vue";
 </script>
 
 <template>
-  <main>
-  
-</main>
+<loginCompVue />
 </template>
 
 <style scoped>
