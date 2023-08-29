@@ -1,8 +1,14 @@
-<script setup>
+<script>
 </script>
 
 <template>
   <main>
-   
-  </main>
+    <div class="content-section">
+  </div>
+</main>
 </template>
+
+<style scoped>
+
+
+</style>
