@@ -19,9 +19,11 @@
           placeholder="cpf"
         />
       </div>
+      <router-link to="/menu">
       <div class="button">
-        <button> <router-link to="/menu">entrar</router-link></button>
+        <button> entrar</button>
       </div>
+      </router-link>
 
     </div>
   </main>

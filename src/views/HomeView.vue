@@ -7,7 +7,6 @@ import loginCompVue from '../components/loginComp.vue'
     <div class="image-container">
       <img src="../assets/loginImage.png" alt="" />
     </div>
-
     <div class="login-container">
       <loginCompVue />
     </div>
@@ -24,18 +23,12 @@ import loginCompVue from '../components/loginComp.vue'
   height: 100vh;
 }
 .login-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 55%;
+
+  width: 50%;
 }
 .image-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 45%;
+
+  width: 50%;
 }
 
 @media (max-width: 912px) {
