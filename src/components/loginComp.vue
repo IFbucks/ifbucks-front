@@ -19,7 +19,7 @@
           placeholder="cpf"
         />
       </div>
-      <router-link to="/menu">
+      <router-link to="/admin">
       <div class="button">
         <button> entrar</button>
       </div>
