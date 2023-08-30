@@ -5,7 +5,7 @@
   <main>
     <div class="container">
       <router-link to="/">
-        <img class="image" src="../assets/ifbucksLogo.png" alt="" />
+        <img class="image" src="../assets/ifbucksLogo.png" alt="logo do site IFbucks" />
       </router-link>
         
       <h1>Bem Vindo de volta!</h1>
@@ -28,7 +28,7 @@
 </template>
 
 <style scoped>
-* {
+*{
   box-sizing: border-box;
   margin: 0;
 }
