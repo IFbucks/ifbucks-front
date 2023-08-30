@@ -37,4 +37,14 @@ import loginCompVue from '../components/loginComp.vue'
   align-items: center;
   width: 45%;
 }
+
+@media (max-width: 768px) {
+  .image-container {
+    display: none; 
+  }
+
+  .login-container {
+    flex: 2; 
+  }
+}
 </style>
