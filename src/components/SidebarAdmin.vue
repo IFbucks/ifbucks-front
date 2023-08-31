@@ -9,8 +9,8 @@
     </div>
    <ul>
     <router-link to='/categorias'><li>Cadastrar Categoria</li></router-link>
-    <li>Cadastrar Funcionário</li>
-    <li>Cadastrar Item</li>
+    <router-link to="/funcionarios"><li>Cadastrar Funcionário</li></router-link> 
+    <router-link to="/itens"><li>Cadastrar Item</li></router-link>
    </ul>
         
     </div>
