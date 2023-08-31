@@ -23,11 +23,9 @@ import loginCompVue from '../components/loginComp.vue'
   height: 100vh;
 }
 .login-container {
-
   width: 50%;
 }
 .image-container {
-
   width: 50%;
 }
 
