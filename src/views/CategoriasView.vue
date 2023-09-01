@@ -7,10 +7,10 @@
       <input type="text" id="nome" v-model="nome" placeholder="Nome" />
 
       <input type="text" id="descricao" v-model="descricao" placeholder="Descrição" />
-    </div>
-
-    <div class="button">
-      <button>Adicionar</button>
+      <div class="button">
+        <button>Adicionar</button>
+        <!--p/ colocar botao p/ baixo como figma, é so tirar da classe input-categoria-->
+      </div>
     </div>
   </div>
 </template>
@@ -23,6 +23,10 @@
   align-items: center;
   width: 100%;
   padding: 2em;
+}
+h1 {
+  color: #004d03;
+  font-weight: bold;
 }
 input {
   max-width: 600px;
@@ -39,9 +43,34 @@ input {
   justify-content: center;
   width: 100%;
 }
-#nome, #descricao {
+input::-webkit-input-placeholder {
+  font-size: 14px;
+  font-family: 'Poppins', sans-serif;
+  color: black;
+}
+#nome,
+#descricao {
   width: 40%;
   margin: 0 1em;
-
+}
+button {
+  padding: 15px;
+  border-radius: 7px;
+  background: #004d03;
+  border: none;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+button:hover {
+  background-color: #0f2c11;
+}
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: right;
+  width: 100%;
+  padding: 1em;
 }
 </style>
