@@ -4,16 +4,16 @@
   <div class="container-funcionarios">
     <h1>Cadastrar Novo Funcionário</h1>
     <div class="input-funcionarios">
-      <input type="text" id="nome" v-model="nome" placeholder="Nome" />
-      <input type="text" id="sobrenome" v-model="sobrenome" placeholder="Sobrenome" />
+      <input type="text" id="nome-funcionario" v-model="nome" placeholder="Nome" />
+      <input type="text" id="sobrenome-funcionario" v-model="sobrenome" placeholder="Sobrenome" />
         <!-- <input type="text" id="cpf" v-model="cpf" placeholder="CPF" />-->
-      <select id="funcionario" name="funcionario">
-        <option value="id-funcionario" disabled selected>Cargo</option>
-        <option value="gerente">Gerente</option>
-        <option value="barista">Barista</option>
-        <option value="atendente">Atendente</option>
-      </select>
     </div>
+    <select id="funcionario" name="funcionario">
+      <option value="id-funcionario" disabled selected>Cargo</option>
+      <option value="gerente">Gerente</option>
+      <option value="barista">Barista</option>
+      <option value="atendente">Atendente</option>
+    </select>
   </div>
 </template>
 
@@ -49,6 +49,12 @@ input::-webkit-input-placeholder {
   align-items: center;
   justify-content: center;
   width: 100%;
+  padding: 1em;
+}
+#nome-funcionario,
+#sobrenome-funcionario {
+  width: 45%;
+  margin: 0 1em;
 }
 select {
   max-width: 300px;
@@ -59,5 +65,8 @@ select {
   background: #d9d9d9;
   border: none;
   font-family: poppins, sans-serif;
+}
+option {
+    background-color: rgba(0, 77, 3, 0.15);
 }
 </style>

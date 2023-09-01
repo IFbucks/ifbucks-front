@@ -4,9 +4,9 @@
   <div class="container-categorias">
     <h1>Cadastrar Nova Categoria</h1>
     <div class="input-categoria">
-      <input type="text" id="nome" v-model="nome" placeholder="Nome" />
+      <input type="text" id="nome-categoria" v-model="nome" placeholder="Nome" />
 
-      <input type="text" id="descricao" v-model="descricao" placeholder="Descrição" />
+      <input type="text" id="descricao-categoria" v-model="descricao" placeholder="Descrição" />
       <div class="button">
         <button>Adicionar</button>
         <!--p/ colocar botao p/ baixo como figma, é so tirar da classe input-categoria-->
@@ -48,8 +48,8 @@ input::-webkit-input-placeholder {
   font-family: 'Poppins', sans-serif;
   color: black;
 }
-#nome,
-#descricao {
+#nome-categoria,
+#descricao-categoria {
   width: 40%;
   margin: 0 1em;
 }
