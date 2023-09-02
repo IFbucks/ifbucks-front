@@ -29,7 +29,7 @@ import loginCompVue from '../components/loginComp.vue'
   width: 50%;
 }
 
-@media (max-width: 912px) {
+@media (max-width: 1200px) {
   .image-container {
     display: none; 
   }
