@@ -30,10 +30,7 @@
 </template>
 
 <style scoped>
-*{
-  box-sizing: border-box;
-  margin: 0;
-}
+
 .container {
   font-weight: normal;
   display: flex;

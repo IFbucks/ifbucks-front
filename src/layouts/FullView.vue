@@ -1,19 +1,60 @@
-<script setup>
-import SidebarAdmin from "../components/SidebarAdmin.vue";
+<script>
+import SidebarAdmin from '../components/SidebarAdmin.vue'
 
+export default {
+  components: {
+    SidebarAdmin
+  },
+
+  setup() {
+    return {
+      isSidebarOpen: true
+    }
+  },
+  methods: {
+    toggleMenu() {
+      this.isSidebarOpen = !this.isSidebarOpen
+      console.log(this.isSidebarOpen)
+    }
+  }
+}
 </script>
 <template>
-    <div class="container">
-        <sidebar-admin />
-        <router-view />
-    </div>    
+  <div class="container">
+    <div class="sidebar">
+        <button @click=""></button>
+      <sidebar-admin :isSidebarOpen="isSidebarOpen" :toggleMenu="toggleMenu" />
+    </div>
+    <div class="wrapper">
+      <router-view />
+    </div>
+  </div>
 </template>
 
-<style scoped> 
+<style scoped>
 .container {
-    width: 100vw;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
+  position: relative;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+  width: 20vw;
+  height: 100vh;
+  background-color: #379e3c;
+  color: white;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+.wrapper {
+  width: 100%;
+
+  padding: 1em;
+  margin-left: 20vw;
 }
 </style>

@@ -1,52 +1,101 @@
-  <script>
-  
-  </script>
+<script>
+export default {
+  props: {
+    isSidebarOpen: {
+      type: Boolean,
+      required: true
+    }
+  },
+  methods: {
+    toggleMenu() {
+      this.$emit('toggleMenu')
+    }
+  }
 
- <template>
-    <div class="sidebar">
-    <div id="perfil-admin">
-        administrador
+}
+</script>
+
+<template>
+  <div class="sidebar" v-show="isSidebarOpen">
+    <div class="cabecalho-sidebar">
+      <img src="../assets/ifbucksLogo.png" alt="logo" class="logo" />
+      <h1 class="titulo">Administrador</h1>
     </div>
-   <ul>
-    <router-link to='/categorias'><li>Cadastrar Categoria</li></router-link>
-    <router-link to="/funcionarios"><li>Cadastrar Funcionário</li></router-link> 
-    <router-link to="/itens"><li>Cadastrar Item</li></router-link>
-   </ul>
-        
+    <ul>
+      <li><router-link to="/categorias">Cadastrar Categoria</router-link></li>
+      <li><router-link to="/funcionarios">Cadastrar Funcionario</router-link></li>
+      <li><router-link to="/itens">Cadastrar Itens</router-link></li>
+    </ul>
+    <div >
     </div>
-  </template>
-  
-  
-  <style scoped>
-  .sidebar {
-    width: 300px;
-    background-color: #379E3C;
-    color: black;
-    height: 100vh;
-  }
-  
-  ul {
-    list-style: none;
-    padding: 0;
-  }
-  
-  li {
-    padding: 15px;
-    margin: 15px;
-    cursor: pointer;
-    border-radius: 18px;
-    transition: background-color 0.3s;
-  }
-  
-  li:hover {
-    background-color: #0F2C11;
-    color: #ffff;
-  }
-  #perfil-admin{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding-top: 25px;
-  }
-  </style>
-  
+  </div>
+
+
+</template>
+
+<style scoped>
+.sidebar {
+  height: 100vh;
+  background-color: #379e3c;
+  color: white;
+  max-width: 20vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+  gap: 0.2rem;
+  width: 100%;
+}
+
+a {
+  text-decoration: none;
+
+  color: #ffff;
+}
+
+li {
+  padding: 1em 0;
+  width: 100%;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  display: flex;
+  justify-content: center;
+}
+
+li:hover {
+  background-color: #0f2c11;
+  color: #ffff;
+}
+
+.cabecalho-sidebar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  border-bottom: 1px solid #ffff;
+}
+
+.titulo {
+  font-size: 1.5em;
+  font-weight: bold;
+  text-align: center;
+}
+
+.logo {
+  width: 4em;
+  height: 4em;
+  border-radius: 4em;
+  margin-bottom: 1em;
+  margin: 1em;
+}
+</style>
