@@ -22,8 +22,7 @@ export default {
 <template>
   <div class="container">
     <div class="sidebar">
-        <button @click=""></button>
-      <sidebar-admin :isSidebarOpen="isSidebarOpen" :toggleMenu="toggleMenu" />
+      <sidebar-admin />
     </div>
     <div class="wrapper">
       <router-view />

@@ -1,22 +1,12 @@
 <script>
 export default {
-  props: {
-    isSidebarOpen: {
-      type: Boolean,
-      required: true
-    }
-  },
-  methods: {
-    toggleMenu() {
-      this.$emit('toggleMenu')
-    }
-  }
+
 
 }
 </script>
 
 <template>
-  <div class="sidebar" v-show="isSidebarOpen">
+  <div class="sidebar" >
     <div class="cabecalho-sidebar">
       <img src="../assets/ifbucksLogo.png" alt="logo" class="logo" />
       <h1 class="titulo">Administrador</h1>
@@ -38,7 +28,7 @@ export default {
   height: 100vh;
   background-color: #379e3c;
   color: white;
-  max-width: 20vw;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
