@@ -24,11 +24,9 @@ export default {
   },
   methods: {
     editFuncionario() {
-      // Implemente a lógica para editar o funcionário aqui
       this.editaFuncionario(this.id);
     },
     confirmDelete() {
-      // Ao clicar em "Excluir", chamamos a função deleteFuncionario passando o id do funcionário
       this.deleteFuncionario(this.id);
     },
   },
