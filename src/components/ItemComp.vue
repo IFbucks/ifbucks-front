@@ -1,7 +1,11 @@
 <template>
   <div class="container-produto">
     <div class="titulo">
+
+
+      <img :src="imagem" alt="" class="imagem">
       <h1>{{ nome }}</h1>
+      <p>{{ preco }}</p>
 
       <p>
         {{ descricao }}
@@ -21,8 +25,10 @@ export default {
   props: {
     nome: String,
     descricao: String,
+    preco: String,
     deleteitem: Function,
     editaCategoria: Function,
+    imagem: String,
     id: Number
   },
   methods: {
@@ -42,6 +48,12 @@ export default {
   align-items: center;
   justify-content: space-between;
   gap: 4em;
+}
+
+.imagem {
+  width: 100px;
+  height: 100px;
+  border-radius: 1em;
 }
 .container-produto {
   display: flex;

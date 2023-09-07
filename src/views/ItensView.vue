@@ -14,8 +14,8 @@
             {{ categoria.nome }}
           </option>
         </select>
-        <button @click=" postProduto">
-          'Adicionar' 
+        <button @click="postProduto">
+          Adicionar
         </button>
       </div>
     </div>
@@ -25,9 +25,11 @@
         v-for="item in produtos"
         :key="item.id"
         :nome="item.nome"
+        :preco="item.preco"
         :descricao="item.descricao"
         :deleteitem="deleteProduto"
         :editaProduto="editaProduto"
+        :imagem="item.imagem"
         :id="item.id"
       />
     </div>
