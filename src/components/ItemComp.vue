@@ -1,5 +1,5 @@
 <template>
-  <div class="container-categoria">
+  <div class="container-produto">
     <div class="titulo">
       <h1>{{ nome }}</h1>
 
@@ -9,7 +9,7 @@
     </div>
 
     <div class="botoes">
-      <button @click="editCategoria">Editar</button>
+      <button @click="editProduto">Editar</button>
       <button @click="confirmDelete">Excluir</button>
     </div>
   </div>
@@ -17,20 +17,20 @@
 
 <script>
 export default {
-  name: 'CategoriaComp',
+  name: 'ProdutoComp',
   props: {
     nome: String,
     descricao: String,
-    deleteCategoria: Function,
+    deleteitem: Function,
     editaCategoria: Function,
     id: Number
   },
   methods: {
-    editCategoria() {
-      this.editaCategoria(this.id)
+    editProduto() {
+      this.editaProduto(this.id)
     },
     confirmDelete() {
-      this.deleteCategoria(this.id)
+      this.deleteitem(this.id)
     }
   }
 }
@@ -43,7 +43,7 @@ export default {
   justify-content: space-between;
   gap: 4em;
 }
-.container-categoria {
+.container-produto {
   display: flex;
   flex-direction: row;
   justify-content: space-between;

@@ -5,6 +5,7 @@
     <div class="form">
       <div class="grupo-inputs">
         <input type="text" v-model="nome" placeholder="Nome" />
+        <input type="text" v-model="descricao" placeholder="Descrição" />
         <button @click="postCategoria">Adicionar</button>
       </div>
     </div>
@@ -13,7 +14,7 @@
       <CategoriaComp
         v-for="categoria in categorias"
         :key="categoria.id"
-        :nome="categoria.descricao"
+        :nome="categoria.nome"
         :descricao="categoria.descricao"
         :deleteCategoria="deleteCategoria"
         :id="categoria.id"
@@ -31,6 +32,7 @@ export default {
   data() {
     return {
       nome: '',
+      descricao: '',
       categorias: []
     }
   },
@@ -53,7 +55,8 @@ export default {
       }
       try {
         const novaCategoria = {
-          descricao: this.nome
+          nome: this.nome,
+          descricao: this.descricao
         }
         const response = await axios.post('http://localhost:8000/categorias/', novaCategoria)
         this.categorias.push(response.data)
@@ -66,7 +69,7 @@ export default {
       try {
         await axios.delete(`http://localhost:8000/categorias/${id}/`)
         // Remove a categoria com o id correspondente da lista
-        this.categorias = this.categorias.filter(categoria => categoria.id !== id)
+        this.categorias = this.categorias.filter((categoria) => categoria.id !== id)
       } catch (error) {
         console.error('Erro ao excluir categoria:', error)
       }
@@ -74,9 +77,9 @@ export default {
 
     async editaCategoria(id, nome) {
       try {
-        await axios.put(`http://localhost:8000/categorias/${id}/`, {descricao: nome})
+        await axios.put(`http://localhost:8000/categorias/${id}/`, { descricao: nome })
         // Remove a categoria com o id correspondente da lista
-        this.categorias = this.categorias.map(categoria => {
+        this.categorias = this.categorias.map((categoria) => {
           if (categoria.id === id) {
             categoria.descricao = nome
           }
@@ -87,9 +90,7 @@ export default {
       }
     },
 
-
     handleEdit(id) {
-
       const nome = prompt('Digite o novo nome da categoria:')
       this.editaCategoria(id, nome)
     }
@@ -100,84 +101,67 @@ export default {
 }
 </script>
 
-
 <style scoped>
-
-
-.container{
-    display:flex;
+.container {
+  display: flex;
   flex-direction: column;
-  align-items:center;
+  align-items: center;
   width: 100%;
-
-
 }
-.categorias{
-  display:flex;
+.categorias {
+  display: flex;
   flex-direction: column;
-  width:100%;
-  gap:1em;
+  width: 100%;
+  gap: 1em;
 }
 
-
-
-
-
-.form{
-  display:flex;
+.form {
+  display: flex;
   flex-direction: column;
 
-  align-items:start;
+  align-items: start;
 
   width: 100%;
 
-  gap:2em;
-  margin-bottom:2em;
+  gap: 2em;
+  margin-bottom: 2em;
 }
 
-input{
+input {
+  padding: 15px;
 
-  padding:15px;
-
-  outline:none;
+  outline: none;
   border-radius: 7px;
   background: #d9d9d9;
   border: none;
   width: 100%;
 }
 
-button{
-    padding:15px;
+button {
+  padding: 15px;
 
-  outline:none;
+  outline: none;
   border-radius: 7px;
   background: #d9d9d9;
   border: none;
-  background-color:#379e3c;
-  color:white;
+  background-color: #379e3c;
+  color: white;
   font-weight: 600;
-
 
   transition: all 0.5s;
 }
 
-
-button:hover{
+button:hover {
   background-color: #0f2c11;
-  cursor:pointer;
-
+  cursor: pointer;
 }
 
-
-.grupo-inputs{
-  display:flex;
+.grupo-inputs {
+  display: flex;
   flex-direction: row;
   justify-content: center;
   width: 100%;
 
-  gap:1em;
-
+  gap: 1em;
 }
-
-
 </style>
