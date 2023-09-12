@@ -1,25 +1,21 @@
-<script>
-export default {
-
-
-}
-</script>
-
 <template>
   <div class="sidebar" >
     <div class="cabecalho-sidebar">
       <img src="../assets/ifbucksLogo.png" alt="logo" class="logo" />
-      <h1 class="titulo">Administrador</h1>
+      <h1 class="titulo">Cozinha</h1>
     </div>
     <ul>
-      <li><router-link to="/categorias">Cadastrar Categoria</router-link></li>
-      <li><router-link to="/funcionarios">Cadastrar Funcionario</router-link></li>
-      <li><router-link to="/itens">Cadastrar Itens</router-link></li>
+      <li>>Cadastrar Categoria</li>
+      <li>Cadastrar Funcionario</li>
+      <li>Cadastrar Itens</li>
     </ul>
   </div>
 
-
 </template>
+
+<script setup>
+
+</script>
 
 <style scoped>
 .sidebar {
@@ -42,12 +38,6 @@ ul {
   justify-content: start;
   gap: 0.2rem;
   width: 100%;
-}
-
-a {
-  text-decoration: none;
-
-  color: #ffff;
 }
 
 li {
@@ -79,11 +69,4 @@ li:hover {
   text-align: center;
 }
 
-.logo {
-  width: 4em;
-  height: 4em;
-  border-radius: 4em;
-  margin-bottom: 1em;
-  margin: 1em;
-}
 </style>

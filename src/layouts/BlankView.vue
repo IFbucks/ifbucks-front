@@ -1,4 +1,8 @@
-<script setup></script>
+<script setup>
+//import SidebarCozinha from '../components/SidebarCozinha.vue';
+</script>
+
 <template>
-<router-view />
+    <!--<SidebarCozinha/>-->
+    <router-view />
 </template>

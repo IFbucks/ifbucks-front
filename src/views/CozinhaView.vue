@@ -1,10 +1,13 @@
 <script setup>
+import SidebarCozinha from "../components/SidebarCozinha.vue"
+
+
 
 const isAdmin = true
 
 </script>
 
 <template>
-    <h1>Cozinha</h1>
+    <SidebarCozinha/>
     <button v-if="isAdmin" @click="$router.push({name: 'itens'})">Admin</button>
 </template>
