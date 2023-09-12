@@ -13,13 +13,12 @@
         <input class="input" type="text" v-model="name" placeholder="nome" />
         <input
           class="input"
-          type="text
-        "
+          type="text"
           v-model="cpf"
           placeholder="cpf"
         />
       </div>
-      <router-link to="/admin">
+      <router-link :to="{name: 'cozinha'}">
       <div class="button">
         <button> entrar</button>
       </div>

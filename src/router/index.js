@@ -8,6 +8,7 @@ import AdminView from '../views/AdminView.vue'
 import CategoriasView from '../views/CategoriasView.vue'
 import FuncionariosView from '../views/FuncionariosView.vue'
 import ItensView from '../views/ItensView.vue'
+import CozinhaView from '../views/CozinhaView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -21,6 +22,11 @@ const router = createRouter({
           name: 'home',
           component: HomeView
         },
+        {
+          path: '/cozinha',
+          name: 'cozinha',
+          component: CozinhaView
+        }
       ]
     },
     {
