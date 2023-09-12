@@ -1,6 +1,6 @@
 <script setup>
 
-const isAdmin = false
+const isAdmin = true
 
 </script>
 
