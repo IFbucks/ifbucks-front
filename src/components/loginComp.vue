@@ -1,6 +1,5 @@
 <script setup>
 </script>
-
 <template>
   <main>
     <div class="container">
@@ -18,7 +17,7 @@
           placeholder="cpf"
         />
       </div>
-      <router-link :to="{name: 'cozinha '}">
+      <router-link :to="{name: 'cozinha'}">
       <div class="button">
         <button> entrar</button>
       </div>

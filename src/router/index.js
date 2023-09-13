@@ -22,11 +22,6 @@ const router = createRouter({
           name: 'home',
           component: HomeView
         }
-        // {
-        //   path: '/kitchen',
-        //   name: 'kitchen',
-        //   component: KitchenView
-        // }
       ]
     },
     {
