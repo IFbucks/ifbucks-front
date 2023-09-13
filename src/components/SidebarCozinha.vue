@@ -5,8 +5,8 @@
       <h1 class="titulo">Cozinha</h1>
     </div>
     <ul>
-      <li>>Cadastrar Categoria</li>
-      <li>Cadastrar Funcionario</li>
+      <li>Cadastrar ola</li>
+      <li>Cadastrar bla</li>
       <li>Cadastrar Itens</li>
     </ul>
   </div>
@@ -40,6 +40,12 @@ ul {
   width: 100%;
 }
 
+a {
+  text-decoration: none;
+
+  color: #ffff;
+}
+
 li {
   padding: 1em 0;
   width: 100%;
@@ -69,4 +75,11 @@ li:hover {
   text-align: center;
 }
 
+.logo {
+  width: 4em;
+  height: 4em;
+  border-radius: 4em;
+  margin-bottom: 1em;
+  margin: 1em;
+}
 </style>

@@ -1,31 +1,12 @@
-<script>
-import SidebarAdmin from '../components/SidebarAdmin.vue'
-
-export default {
-  components: {
-    SidebarAdmin
-  },
-
-  setup() {
-    return {
-      isSidebarOpen: true
-    }
-  },
-  methods: {
-    toggleMenu() {
-      this.isSidebarOpen = !this.isSidebarOpen
-      console.log(this.isSidebarOpen)
-    }
-  }
-}
+<script setup>
+import SidebarCozinha from "../components/SidebarCozinha.vue";
 </script>
 <template>
   <div class="container">
     <div class="sidebar">
-      <sidebar-admin />
+      <SidebarCozinha />
     </div>
     <div class="wrapper">
-      <router-view />
     </div>
   </div>
 </template>
