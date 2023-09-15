@@ -1,14 +1,32 @@
-<script setup>
+<script>
 import SidebarCozinha from "../components/SidebarCozinha.vue";
+export default {
+  components: {
+    SidebarCozinha
+  },
+
+  setup() {
+    return {
+      isSidebarOpen: true
+    }
+  },
+  methods: {
+    toggleMenu() {
+      this.isSidebarOpen = !this.isSidebarOpen
+      console.log(this.isSidebarOpen)
+    }
+  }
+}
 </script>
-<template>
-  <div class="container">
+<template> 
+   <div class="container">
     <div class="sidebar">
       <SidebarCozinha />
     </div>
     <div class="wrapper">
+      <router-view />
     </div>
-  </div>
+   </div>
 </template>
 
 <style scoped>

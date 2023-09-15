@@ -1,8 +1,5 @@
 <script setup>
 //import SidebarCozinha from "../components/SidebarCozinha.vue"
-
-
-
 const isAdmin = true
 
 </script>

@@ -60,18 +60,7 @@ const router = createRouter({
           component: ItensView
         }
       ]
-    } //
-    //  {
-    //    path: '/kitchen',
-    //    component: KitchenView,
-    //    children: [
-    //      {
-    //        path: '/',
-    //        name: 'kitchen-home',
-    //        component: CozinhaView
-    //      },
-    //]
-    //},//
+    }
   ]
 })
 
