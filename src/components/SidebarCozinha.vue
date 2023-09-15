@@ -5,7 +5,7 @@
       <h1 class="titulo">Cozinha</h1>
     </div>
     <ul>
-      <li>Cadastrar ola</li>
+      <li>Cadastrar ola</li> 
       <li>Cadastrar bla</li>
       <li>Cadastrar Itens</li>
     </ul>
@@ -13,8 +13,12 @@
 
 </template>
 
-<script setup>
-
+<script >
+export default{
+  data(){
+    mesas: [],
+  }
+}
 </script>
 
 <style scoped>
