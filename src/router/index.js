@@ -29,11 +29,16 @@ const router = createRouter({
       component: KitchenView,
       children: [
         {
-        path: '/cozinha',
-        name: 'cozinha',
-        component: CozinhaView
-      }
-    ]
+          path: '/cozinha',
+          name: 'cozinha',
+          component: CozinhaView
+        },
+        {
+          path: '/mesa/:id',
+          name: 'mesa',
+          component: () => import('../views/MesaView.vue')
+        }
+      ]
     },
     {
       path: '/',

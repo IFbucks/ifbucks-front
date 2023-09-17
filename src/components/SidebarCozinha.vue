@@ -5,18 +5,36 @@
       <h1 class="titulo">Cozinha</h1>
     </div>
     <ul>
-      <li>Cadastrar ola</li> 
-      <li>Cadastrar bla</li>
-      <li>Cadastrar Itens</li>
+      <li v-for="mesa in mesas" :key="mesa.id">Mesa {{ mesa.mesa }}</li>
     </ul>
   </div>
 
 </template>
 
 <script >
+
+import axios from 'axios'
+
 export default{
   data(){
-    mesas: [],
+    return{
+
+      mesas: []
+    }
+  },
+  methods: {
+    getMesas(){
+      axios.get('http://localhost:8000/pedidos')
+      .then((response) => {
+        this.mesas = response.data
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+    }
+  },
+  mounted(){
+    this.getMesas()
   }
 }
 </script>
