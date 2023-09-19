@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import ItemComp from '../components/ItemComp.vue'
+import ItemComp from '@/components/ItemComp.vue'
 import axios from 'axios'
 
 export default {

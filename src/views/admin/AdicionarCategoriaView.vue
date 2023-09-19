@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import CategoriaComp from '../components/CategoriaComp.vue'
+import CategoriaComp from '@/components/CategoriaComp.vue'
 import axios from 'axios'
 
 export default {

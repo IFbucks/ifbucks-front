@@ -1,34 +1,26 @@
-<script setup>
-</script>
+<script setup></script>
 <template>
   <main>
     <div class="container">
       <router-link to="/">
-      <img class="image" src="../assets/ifbucksLogo.png" alt="logo do site IFbucks" />
-      </router-link>
-        
-      <h1>Bem Vindo de volta!</h1>
-      <div class="inputs">
-        <input class="input" type="text" v-model="name" placeholder="nome" />
-        <input
-          class="input"
-          type="text"
-          v-model="cpf"
-          placeholder="cpf"
-        />
-      </div>
-      <router-link :to="{name: 'cozinha'}">
-      <div class="button">
-        <button> entrar</button>
-      </div>
+        <img class="image" src="../assets/ifbucksLogo.png" alt="logo do site IFbucks" />
       </router-link>
 
+      <h1>Bem Vindo de volta!</h1>
+      <div class="inputs">
+        <input class="input" type="text" placeholder="nome" />
+        <input class="input" type="text" placeholder="cpf" />
+      </div>
+      <router-link :to="{ name: 'cozinha' }">
+        <div class="button">
+          <button>entrar</button>
+        </div>
+      </router-link>
     </div>
   </main>
 </template>
 
 <style scoped>
-
 .container {
   font-weight: normal;
   display: flex;
@@ -66,7 +58,7 @@ button {
 .input {
   max-width: 600px;
   width: 100%;
-  padding: 20px ;
+  padding: 20px;
   flex-shrink: 0;
   border-radius: 20px;
   background: #d9d9d9;

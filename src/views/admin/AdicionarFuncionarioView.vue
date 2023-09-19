@@ -52,7 +52,7 @@
 </template>
 
 <script>
-import FuncionarioComp from '../components/FuncionarioComp.vue'
+import FuncionarioComp from '@/components/FuncionarioComp.vue'
 import axios from 'axios'
 
 export default {

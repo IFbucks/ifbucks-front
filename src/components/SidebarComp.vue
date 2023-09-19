@@ -1,39 +1,36 @@
+<template>
+  <div class="sidebar">
+    <nav>
+      <router-link v-for="item in sidebar_items" :key="item.to" :to="item.to">{{
+        item.title
+      }}</router-link>
+    </nav>
+  </div>
+</template>
+
 <script>
 export default {
-
-
+  name: 'SidebarComp',
+  props: {
+    sidebar_items: Array
+  }
 }
 </script>
 
-<template>
-  <div class="sidebar" >
-    <div class="cabecalho-sidebar">
-      <img src="../assets/ifbucksLogo.png" alt="logo" class="logo" />
-      <h1 class="titulo">Administrador</h1>
-    </div>
-    <ul>
-      <li><router-link to="/categorias">Cadastrar Categoria</router-link></li>
-      <li><router-link to="/funcionarios">Cadastrar Funcionario</router-link></li>
-      <li><router-link to="/itens">Cadastrar Itens</router-link></li>
-    </ul>
-  </div>
-
-
-</template>
-
 <style scoped>
 .sidebar {
-  height: 100vh;
-  background-color: #379e3c;
+  height: 90vh;
+  background-color: #e2e8f0;
   color: white;
   width: 100%;
+  max-width: 20vw;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: start;
 }
 
-ul {
+nav {
   list-style: none;
   padding: 0;
   display: flex;
@@ -42,26 +39,32 @@ ul {
   justify-content: start;
   gap: 0.2rem;
   width: 100%;
+  margin-top: 1em;
+
+  overflow-y: scroll;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+nav::-webkit-scrollbar {
+  display: none;
 }
 
 a {
-  text-decoration: none;
-
-  color: #ffff;
-}
-
-li {
   padding: 1em 0;
-  width: 100%;
+  width: 90%;
+  border-radius: 1em;
   cursor: pointer;
   transition: background-color 0.3s;
   display: flex;
   justify-content: center;
+  text-decoration: none;
+  color: #166534;
+  font-size: 1.1em;
 }
 
-li:hover {
-  background-color: #0f2c11;
-  color: #ffff;
+a:hover {
+  background-color: #cbd5e1;
 }
 
 .cabecalho-sidebar {

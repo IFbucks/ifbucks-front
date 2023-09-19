@@ -1,72 +1,72 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
-import BlankView from '../layouts/BlankView.vue'
-import FullView from '../layouts/FullView.vue'
-import KitchenView from '../layouts/KitchenView.vue'
+// Importações das páginas
 import HomeView from '../views/HomeView.vue'
-import AdminView from '../views/AdminView.vue'
-import CategoriasView from '../views/CategoriasView.vue'
-import FuncionariosView from '../views/FuncionariosView.vue'
-import ItensView from '../views/ItensView.vue'
-import CozinhaView from '../views/CozinhaView.vue'
+import AdicionarCategoriaView from '../views/admin/AdicionarCategoriaView.vue'
+import AdicionarFuncionarioView from '../views/admin/AdicionarFuncionarioView.vue'
+import AdicionarItensView from '../views/admin/AdicionarItensView.vue'
+import CozinhaView from '../views/cozinha/CozinhaView.vue'
+import MesaView from '../views/cozinha/MesaView.vue'
+
+// Importações dos layouts
+import BlankLayout from '@/layouts/BlankLayout.vue'
+import KitchenLayout from '@/layouts/KitchenLayout.vue'
+import AdminLayout from '@/layouts/AdminLayout.vue'
+
+const routes = [
+  {
+    path: '/',
+    component: BlankLayout,
+    children: [
+      {
+        path: '/',
+        name: 'home',
+        component: HomeView
+      }
+    ]
+  },
+  {
+    path: '/cozinha',
+    component: KitchenLayout,
+    children: [
+      {
+        path: '/',
+        name: 'cozinha',
+        component: CozinhaView
+      },
+      {
+        path: '/mesa/:id',
+        name: 'mesa',
+        component: MesaView
+      }
+    ]
+  },
+  {
+    path: '/admin',
+    component: AdminLayout,
+    children: [
+      {
+        path: 'categorias',
+        name: 'categorias',
+        component: AdicionarCategoriaView
+      },
+      {
+        path: 'funcionarios',
+        name: 'funcionarios',
+        component: AdicionarFuncionarioView
+      },
+      {
+        path: 'itens',
+        name: 'itens',
+        component: AdicionarItensView
+      }
+    ]
+  }
+]
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
-  routes: [
-    {
-      path: '/',
-      component: BlankView,
-      children: [
-        {
-          path: '/',
-          name: 'home',
-          component: HomeView
-        }
-      ]
-    },
-    {
-      path: '/kitchen',
-      component: KitchenView,
-      children: [
-        {
-          path: '/cozinha',
-          name: 'cozinha',
-          component: CozinhaView
-        },
-        {
-          path: '/mesa/:id',
-          name: 'mesa',
-          component: () => import('../views/MesaView.vue')
-        }
-      ]
-    },
-    {
-      path: '/',
-      component: FullView,
-      children: [
-        {
-          path: '/admin',
-          name: 'admin',
-          component: AdminView
-        },
-        {
-          path: '/categorias',
-          name: 'categorias',
-          component: CategoriasView
-        },
-        {
-          path: '/funcionarios',
-          name: 'funcionarios',
-          component: FuncionariosView
-        },
-        {
-          path: '/itens',
-          name: 'itens',
-          component: ItensView
-        }
-      ]
-    }
-  ]
+  routes
 })
 
 export default router
