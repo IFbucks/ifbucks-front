@@ -18,20 +18,18 @@
         <label for="cargo">Cargo:</label>
         <select v-model="cargo" id="cargo">
           <option value="" disabled selected>Selecione um Cargo</option>
-          <option v-for="cargo in cargos" :key="cargo.id" :value="cargo.id">{{ cargo.descricao }}</option>
+          <option v-for="cargo in cargos" :key="cargo.id" :value="cargo.value">
+            {{ cargo.value }}
+          </option>
         </select>
       </div>
       <div class="grupo-inputs">
         <label for="imagem">Imagem:</label>
         <input type="file" ref="fileInput" @change="handleFileChange" />
       </div>
-      <button @click="postFuncionario">
-        Adicionar
-      </button>
+      <button @click="postFuncionario">Adicionar</button>
       <button @click="cancelarEdicaoFuncionario" v-if="editingFuncionarioId">Cancelar</button>
-      <div v-if="funcionarioAdicionado" class="feedback">
-        Funcionário adicionado com sucesso!
-      </div>
+      <div v-if="funcionarioAdicionado" class="feedback">Funcionário adicionado com sucesso!</div>
     </div>
 
     <div class="funcionarios">
@@ -41,7 +39,7 @@
         :nome="funcionario.nome"
         :email="funcionario.email"
         :cpf="funcionario.cpf"
-        :cargo="funcionario.tipopessoa"
+        :cargo="funcionario.cargo"
         :imagem="funcionario.imagem"
         :id="funcionario.id"
         :deleteFuncionario="deleteFuncionario"
@@ -64,24 +62,21 @@ export default {
       cargo: '',
       imagem: null,
       funcionarios: [],
-      cargos: [],
       funcionarioAdicionado: false,
       editingFuncionarioId: null,
+
+      cargos: [
+        { value: 'Cliente', id: 1 },
+        { value: 'Funcionário', id: 2 },
+        { value: 'Gerente', id: 3 },
+        { value: 'Garçom', id: 4 }
+      ]
     }
   },
   components: {
     FuncionarioComp
   },
   methods: {
-
-    async getCargos() {
-      try {
-        const response = await axios.get('http://localhost:8000/tipopessoas/')
-        this.cargos = response.data
-      } catch (error) {
-        console.error('Erro ao buscar cargos:', error)
-      }
-    },
     async getFuncionarios() {
       try {
         const response = await axios.get('http://localhost:8000/usuarios/')
@@ -91,26 +86,26 @@ export default {
       }
     },
     handleFileChange(event) {
-      this.imagem = event.target.files[0];
+      this.imagem = event.target.files[0]
     },
     async postFuncionario() {
       if (!this.nome || !this.email || !this.cpf || !this.cargo || !this.imagem) {
-        alert('Preencha todos os campos antes de adicionar um funcionário.');
-        return;
+        alert('Preencha todos os campos antes de adicionar um funcionário.')
+        return
       }
 
-      const formData = new FormData();
-      formData.append('cpf', this.cpf);
-      formData.append('email', this.email);
-      formData.append('nome', this.nome);
-      formData.append('tipopessoa', parseInt(this.cargo));
-      formData.append('imagem', this.imagem);
+      const formData = new FormData()
+      formData.append('cpf', this.cpf)
+      formData.append('email', this.email)
+      formData.append('nome', this.nome)
+      formData.append('tipopessoa', parseInt(this.cargo))
+      formData.append('imagem', this.imagem)
 
       try {
         const response = await axios.post('http://localhost:8000/usuarios/', formData)
         this.funcionarios.push(response.data)
-        this.limparCampos();
-        this.funcionarioAdicionado = true;
+        this.limparCampos()
+        this.funcionarioAdicionado = true
       } catch (error) {
         console.error('Erro ao adicionar funcionário:', error)
       }
@@ -142,7 +137,7 @@ export default {
           }
           return funcionario
         })
-        this.limparCampos();
+        this.limparCampos()
       } catch (error) {
         console.error('Erro ao editar funcionário:', error)
       }
@@ -157,21 +152,20 @@ export default {
       }
     },
     cancelarEdicaoFuncionario() {
-      this.limparCampos();
+      this.limparCampos()
     },
     limparCampos() {
-      this.nome = '';
-      this.email = '';
-      this.cpf = '';
-      this.cargo = '';
-      this.imagem = null;
-      this.editingFuncionarioId = null;
-      this.funcionarioAdicionado = false;
-    },
+      this.nome = ''
+      this.email = ''
+      this.cpf = ''
+      this.cargo = ''
+      this.imagem = null
+      this.editingFuncionarioId = null
+      this.funcionarioAdicionado = false
+    }
   },
   mounted() {
-    this.getFuncionarios();
-    this.getCargos();
+    this.getFuncionarios()
   }
 }
 </script>
@@ -237,7 +231,7 @@ button:hover {
   margin-top: 1em;
 }
 
-.funcionarios{
+.funcionarios {
   display: flex;
   flex-direction: column;
   align-items: center;

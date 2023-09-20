@@ -2,9 +2,12 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 // Importações das páginas
 import HomeView from '../views/HomeView.vue'
+
 import AdicionarCategoriaView from '../views/admin/AdicionarCategoriaView.vue'
 import AdicionarFuncionarioView from '../views/admin/AdicionarFuncionarioView.vue'
 import AdicionarItensView from '../views/admin/AdicionarItensView.vue'
+import AdicionarMesaView from '../views/admin/AdicionarMesaView.vue'
+
 import CozinhaView from '../views/cozinha/CozinhaView.vue'
 import MesaView from '../views/cozinha/MesaView.vue'
 
@@ -30,7 +33,7 @@ const routes = [
     component: KitchenLayout,
     children: [
       {
-        path: '/',
+        path: '/cozinha',
         name: 'cozinha',
         component: CozinhaView
       },
@@ -59,13 +62,18 @@ const routes = [
         path: 'itens',
         name: 'itens',
         component: AdicionarItensView
+      },
+      {
+        path: 'mesas',
+        name: 'mesas',
+        component: AdicionarMesaView
       }
     ]
   }
 ]
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHistory(''),
   routes
 })
 

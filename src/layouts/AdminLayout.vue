@@ -24,6 +24,10 @@ export default {
         {
           to: '/admin/itens',
           title: 'Cadastrar novos itens'
+        },
+        {
+          to: '/admin/mesas',
+          title: 'Cadastrar Mesa'
         }
       ]
     }

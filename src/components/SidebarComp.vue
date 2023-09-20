@@ -65,6 +65,7 @@ a {
 
 a:hover {
   background-color: #cbd5e1;
+  color: #15803d;
 }
 
 .cabecalho-sidebar {

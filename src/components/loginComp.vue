@@ -1,10 +1,8 @@
 <script setup></script>
 <template>
   <main>
-    <div class="container">
-      <router-link to="/">
-        <img class="image" src="../assets/ifbucksLogo.png" alt="logo do site IFbucks" />
-      </router-link>
+    <div class="container__login__form">
+      <img class="image" src="../assets/ifbucksLogo.png" alt="logo do site IFbucks" />
 
       <h1>Bem Vindo de volta!</h1>
       <div class="inputs">
@@ -21,7 +19,7 @@
 </template>
 
 <style scoped>
-.container {
+.container__login__form {
   font-weight: normal;
   display: flex;
   flex-direction: column;
@@ -41,6 +39,9 @@
 }
 h1 {
   color: black;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 button {
   background-color: #8fb090;

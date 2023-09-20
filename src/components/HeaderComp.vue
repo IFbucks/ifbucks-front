@@ -10,7 +10,7 @@
     <div class="header__nav">
       <router-link to="/cozinha">Cozinha</router-link>
 
-      <router-link to="/admin">Administração</router-link>
+      <router-link to="/admin/categorias">Administração</router-link>
 
       <router-link to="/">Sair</router-link>
     </div>
