@@ -1,5 +1,11 @@
 <template>
   <div class="container">
+    <AlertaComp
+      v-if="alertaAtivo"
+      :mensagem="alertaMensagem"
+      :tipo="alertaTipo"
+      :fecharAlerta="fecharAlerta"
+    />
     <h1>Cadastrar Nova Categoria</h1>
 
     <div class="form">
@@ -27,30 +33,44 @@
 <script>
 import CategoriaComp from '@/components/CategoriaComp.vue'
 import axios from 'axios'
+import AlertaComp from '../../components/AlertaComp.vue'
 
 export default {
   data() {
     return {
       nome: '',
       descricao: '',
-      categorias: []
+      categorias: [],
+      alertaAtivo: false,
+      alertaTipo: 'erro',
+      alertaMensagem: 'Algo deu errado'
     }
   },
   components: {
-    CategoriaComp
+    CategoriaComp,
+    AlertaComp
   },
   methods: {
+    fecharAlerta() {
+      this.alertaAtivo = false
+    },
+    setAlert(type, mensagem) {
+      this.alertaAtivo = true
+      this.alertaTipo = type
+      this.alertaMensagem = mensagem
+    },
     async getCategorias() {
       try {
         const response = await axios.get('http://localhost:8000/categorias/')
         this.categorias = response.data
       } catch (error) {
-        console.error('Erro ao obter categorias:', error)
+        console.error('Erro ao buscar categorias:', error)
+        this.setAlert('erro', 'Erro ao buscar categorias')
       }
     },
     async postCategoria() {
       if (!this.nome) {
-        alert('Por favor, preencha o campo Nome.')
+        this.setAlert('erro', 'O nome da categoria é obrigatório')
         return
       }
       try {
@@ -61,8 +81,11 @@ export default {
         const response = await axios.post('http://localhost:8000/categorias/', novaCategoria)
         this.categorias.push(response.data)
         this.nome = ''
+        this.descricao = ''
+        this.setAlert('sucesso', 'Categoria adicionada com sucesso')
       } catch (error) {
         console.error('Erro ao adicionar categoria:', error)
+        this.setAlert('erro', 'Erro ao adicionar categoria')
       }
     },
     async deleteCategoria(id) {
@@ -70,8 +93,10 @@ export default {
         await axios.delete(`http://localhost:8000/categorias/${id}/`)
         // Remove a categoria com o id correspondente da lista
         this.categorias = this.categorias.filter((categoria) => categoria.id !== id)
+        this.setAlert('sucesso', 'Categoria excluída com sucesso')
       } catch (error) {
         console.error('Erro ao excluir categoria:', error)
+        this.setAlert('erro', 'Erro ao excluir categoria')
       }
     },
 

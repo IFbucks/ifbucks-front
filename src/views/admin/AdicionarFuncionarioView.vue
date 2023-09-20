@@ -1,5 +1,11 @@
 <template>
   <div class="container">
+    <AlertaComp
+      v-if="alertaAtivo"
+      :mensagem="alertaMensagem"
+      :tipo="alertaTipo"
+      :fecharAlerta="fecharAlerta"
+    />
     <h1>Cadastrar Novo Funcionário</h1>
     <div class="form">
       <div class="grupo-inputs">
@@ -29,7 +35,6 @@
       </div>
       <button @click="postFuncionario">Adicionar</button>
       <button @click="cancelarEdicaoFuncionario" v-if="editingFuncionarioId">Cancelar</button>
-      <div v-if="funcionarioAdicionado" class="feedback">Funcionário adicionado com sucesso!</div>
     </div>
 
     <div class="funcionarios">
@@ -52,6 +57,7 @@
 <script>
 import FuncionarioComp from '@/components/FuncionarioComp.vue'
 import axios from 'axios'
+import AlertaComp from '../../components/AlertaComp.vue'
 
 export default {
   data() {
@@ -65,6 +71,10 @@ export default {
       funcionarioAdicionado: false,
       editingFuncionarioId: null,
 
+      alertaAtivo: false,
+      alertaTipo: 'erro',
+      alertaMensagem: 'Algo deu errado',
+
       cargos: [
         { value: 'Cliente', id: 1 },
         { value: 'Funcionário', id: 2 },
@@ -74,15 +84,25 @@ export default {
     }
   },
   components: {
-    FuncionarioComp
+    FuncionarioComp,
+    AlertaComp
   },
   methods: {
+    fecharAlerta() {
+      this.alertaAtivo = false
+    },
+    setAlert(type, mensagem) {
+      this.alertaAtivo = true
+      this.alertaTipo = type
+      this.alertaMensagem = mensagem
+    },
     async getFuncionarios() {
       try {
         const response = await axios.get('http://localhost:8000/usuarios/')
         this.funcionarios = response.data
       } catch (error) {
         console.error('Erro ao buscar funcionários:', error)
+        this.setAlert('erro', 'Erro ao buscar funcionários')
       }
     },
     handleFileChange(event) {
@@ -90,7 +110,7 @@ export default {
     },
     async postFuncionario() {
       if (!this.nome || !this.email || !this.cpf || !this.cargo || !this.imagem) {
-        alert('Preencha todos os campos antes de adicionar um funcionário.')
+        this.setAlert('erro', 'Todos os campos são obrigatórios')
         return
       }
 
@@ -106,16 +126,20 @@ export default {
         this.funcionarios.push(response.data)
         this.limparCampos()
         this.funcionarioAdicionado = true
+        this.setAlert('sucesso', 'Funcionário adicionado com sucesso!')
       } catch (error) {
         console.error('Erro ao adicionar funcionário:', error)
+        this.setAlert('erro', 'Erro ao adicionar funcionário')
       }
     },
     async deleteFuncionario(id) {
       try {
         await axios.delete(`http://localhost:8000/usuarios/${id}/`)
         this.funcionarios = this.funcionarios.filter((funcionario) => funcionario.id !== id)
+        this.setAlert('sucesso', 'Funcionário excluído com sucesso')
       } catch (error) {
         console.error('Erro ao excluir funcionário:', error)
+        this.setAlert('erro', 'Erro ao excluir funcionário')
       }
     },
     async editaFuncionario(id, nome, cpf, email, cargo) {
@@ -138,8 +162,10 @@ export default {
           return funcionario
         })
         this.limparCampos()
+        this.setAlert('sucesso', 'Funcionário editado com sucesso')
       } catch (error) {
         console.error('Erro ao editar funcionário:', error)
+        this.setAlert('erro', 'Erro ao editar funcionário')
       }
     },
     handleEdit(id) {

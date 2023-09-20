@@ -1,5 +1,11 @@
 <template>
   <div class="container">
+    <AlertaComp
+      v-if="alertaAtivo"
+      :mensagem="alertaMensagem"
+      :tipo="alertaTipo"
+      @fecharAlerta="fecharAlerta"
+    />
     <h1>Cadastrar Nova Mesa</h1>
 
     <div class="form">
@@ -29,63 +35,74 @@
 <script>
 import axios from 'axios'
 import { ref, onMounted } from 'vue'
+import AlertaComp from '../../components/AlertaComp.vue'
 
 export default {
   setup() {
     const mesas = ref([])
     const numero_mesa = ref('')
     const mesa_ativa = ref(true)
+    const alertaAtivo = ref(false)
+    const alertaTipo = ref('erro')
+    const alertaMensagem = ref('Algo deu errado')
+
+    function fecharAlerta() {
+      alertaAtivo.value = false
+    }
+
+    function setAlert(type, mensagem) {
+      alertaAtivo.value = true
+      alertaTipo.value = type
+      alertaMensagem.value = mensagem
+    }
 
     async function getMesas() {
-      const response = await axios.get('http://localhost:8000/mesas')
-      const data = response.data
-      mesas.value = data
+      try {
+        const response = await axios.get('http://localhost:8000/mesas')
+        mesas.value = response.data
+      } catch (error) {
+        setAlert('erro', 'Erro ao buscar mesas.')
+      }
     }
 
     async function postMesa() {
-      const response = await axios.post('http://localhost:8000/mesas/', {
-        numero: numero_mesa.value,
-        status: mesa_ativa.value
-      })
-      const data = response.data
-      mesas.value.push(data)
-      numero_mesa.value = ''
+      try {
+        const response = await axios.post('http://localhost:8000/mesas/', {
+          numero: numero_mesa.value,
+          status: mesa_ativa.value
+        })
+        mesas.value.push(response.data)
+        numero_mesa.value = ''
+        setAlert('sucesso', 'Mesa adicionada com sucesso')
+      } catch (error) {
+        setAlert('erro', 'Erro ao adicionar mesa.')
+      }
     }
 
     async function inativaMesa(id) {
-      await axios.put(`http://localhost:8000/mesas/${id}/`, {
-        numero: mesas.value.find((mesa) => mesa.id === id).numero,
-        status: false
-      })
-
-      mesas.value = mesas.value.map((mesa) => {
-        if (mesa.id === id) {
-          return {
-            ...mesa,
-            status: false
-          }
-        }
-
-        return mesa
-      })
+      try {
+        await axios.put(`http://localhost:8000/mesas/${id}/`, {
+          numero: mesas.value.find((mesa) => mesa.id === id).numero,
+          status: false
+        })
+        mesas.value = mesas.value.map((mesa) =>
+          mesa.id === id ? { ...mesa, status: false } : mesa
+        )
+      } catch (error) {
+        setAlert('erro', 'Erro ao inativar mesa.')
+      }
     }
 
     async function ativaMesa(id) {
-      await axios.put(`http://localhost:8000/mesas/${id}/`, {
-        numero: mesas.value.find((mesa) => mesa.id === id).numero,
-        status: true
-      })
-
-      mesas.value = mesas.value.map((mesa) => {
-        if (mesa.id === id) {
-          return {
-            ...mesa,
-            status: true
-          }
-        }
-
-        return mesa
-      })
+      try {
+        await axios.put(`http://localhost:8000/mesas/${id}/`, {
+          numero: mesas.value.find((mesa) => mesa.id === id).numero,
+          status: true
+        })
+        mesas.value = mesas.value.map((mesa) => (mesa.id === id ? { ...mesa, status: true } : mesa))
+      } catch (error) {
+        setAlert('erro', 'Erro ao ativar mesa.')
+      }
     }
 
     onMounted(() => {
@@ -100,7 +117,8 @@ export default {
       ativaMesa,
       mesas
     }
-  }
+  },
+  components: { AlertaComp }
 }
 </script>
 

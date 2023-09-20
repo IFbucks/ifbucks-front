@@ -1,5 +1,11 @@
 <template>
   <div class="container">
+    <AlertaComp
+      v-if="alertaAtivo"
+      :mensagem="alertaMensagem"
+      :tipo="alertaTipo"
+      :fecharAlerta="fecharAlerta"
+    />
     <h1>Cadastrar Novo Produto</h1>
 
     <div class="form">
@@ -14,9 +20,7 @@
             {{ categoria.nome }}
           </option>
         </select>
-        <button @click="postProduto">
-          Adicionar
-        </button>
+        <button @click="postProduto">Adicionar</button>
       </div>
     </div>
 
@@ -39,6 +43,7 @@
 <script>
 import ItemComp from '@/components/ItemComp.vue'
 import axios from 'axios'
+import AlertaComp from '../../components/AlertaComp.vue'
 
 export default {
   data() {
@@ -51,18 +56,32 @@ export default {
       categorias: [],
       produtos: [],
       editingProductId: null,
+
+      alertaAtivo: false,
+      alertaTipo: 'erro',
+      alertaMensagem: 'Algo deu errado'
     }
   },
   components: {
-    ItemComp
+    ItemComp,
+    AlertaComp
   },
   methods: {
+    fecharAlerta() {
+      this.alertaAtivo = false
+    },
+    setAlert(type, mensagem) {
+      this.alertaAtivo = true
+      this.alertaTipo = type
+      this.alertaMensagem = mensagem
+    },
     async getCategorias() {
       try {
         const response = await axios.get('http://localhost:8000/categorias/')
         this.categorias = response.data
       } catch (error) {
         console.error('Erro ao obter categorias:', error)
+        this.setAlert('erro', 'Erro ao obter categorias')
       }
     },
     async getProdutos() {
@@ -71,38 +90,43 @@ export default {
         this.produtos = response.data
       } catch (error) {
         console.error('Erro ao buscar produtos:', error)
+        this.setAlert('erro', 'Erro ao buscar produtos')
       }
     },
     handleFileChange(event) {
-      this.imagem = event.target.files[0];
+      this.imagem = event.target.files[0]
     },
     async postProduto() {
       if (!this.nome || !this.imagem) {
-        alert('Por favor, preencha o campo Nome e selecione uma imagem.')
+        this.setAlert('erro', 'O nome do produto e a imagem são obrigatórios')
         return
       }
 
-      const formData = new FormData();
-      formData.append('nome', this.nome);
-      formData.append('descricao', this.descricao);
-      formData.append('preco', this.preco);
-      formData.append('categoria', this.categoria);
-      formData.append('imagem', this.imagem);
+      const formData = new FormData()
+      formData.append('nome', this.nome)
+      formData.append('descricao', this.descricao)
+      formData.append('preco', this.preco)
+      formData.append('categoria', this.categoria)
+      formData.append('imagem', this.imagem)
 
       try {
         const response = await axios.post('http://localhost:8000/produtos/', formData)
         this.produtos.push(response.data)
         this.limparCampos()
+        this.setAlert('sucesso', 'Produto adicionado com sucesso')
       } catch (error) {
         console.error('Erro ao adicionar produto:', error)
+        this.setAlert('erro', 'Erro ao adicionar produto')
       }
     },
     async deleteProduto(id) {
       try {
         await axios.delete(`http://localhost:8000/produtos/${id}/`)
         this.produtos = this.produtos.filter((produto) => produto.id !== id)
+        this.setAlert('sucesso', 'Produto excluído com sucesso')
       } catch (error) {
         console.error('Erro ao excluir produto:', error)
+        this.setAlert('erro', 'Erro ao excluir produto')
       }
     },
     async editaProduto(id) {
@@ -115,16 +139,16 @@ export default {
     },
     async salvarEdicaoProduto() {
       if (!this.nome || !this.imagem || !this.editingProductId) {
-        alert('Por favor, preencha todos os campos e selecione uma imagem.')
+        this.setAlert('erro', 'O nome do produto e a imagem são obrigatórios')
         return
       }
 
-      const formData = new FormData();
-      formData.append('nome', this.nome);
-      formData.append('descricao', this.descricao);
-      formData.append('preco', this.preco);
-      formData.append('categoria', this.categoria);
-      formData.append('imagem', this.imagem);
+      const formData = new FormData()
+      formData.append('nome', this.nome)
+      formData.append('descricao', this.descricao)
+      formData.append('preco', this.preco)
+      formData.append('categoria', this.categoria)
+      formData.append('imagem', this.imagem)
 
       try {
         await axios.put(`http://localhost:8000/produtos/${this.editingProductId}/`, formData)
@@ -138,8 +162,10 @@ export default {
           return produto
         })
         this.limparCampos()
+        this.setAlert('sucesso', 'Produto editado com sucesso')
       } catch (error) {
         console.error('Erro ao editar produto:', error)
+        this.setAlert('erro', 'Erro ao editar produto')
       }
     },
     cancelarEdicaoProduto() {
@@ -152,11 +178,11 @@ export default {
       this.categoria = ''
       this.imagem = null
       this.editingProductId = null
-    },
+    }
   },
   mounted() {
-    this.getProdutos();
-    this.getCategorias();
+    this.getProdutos()
+    this.getCategorias()
   }
 }
 </script>
