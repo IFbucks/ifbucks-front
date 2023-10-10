@@ -12,7 +12,7 @@ const user = reactive({
 
 async function login() {
   try {
-    const { data } = await axios.post("http://191.52.55.23:19003/token/", user)
+    const { data } = await axios.post("http://191.52.55.23:19003/token/", user) /*precisa ser endereço universal*/ 
     console.log(data)
     router.push({name: 'cozinha'})
   } catch(e) {
