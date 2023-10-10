@@ -54,7 +54,6 @@ export default {
       pedidos
     }
   },
-  components: { CozinhaTableRow }
 }
 </script>
 

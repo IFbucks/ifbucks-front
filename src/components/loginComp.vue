@@ -1,4 +1,25 @@
-<script setup></script>
+<script setup>
+import { reactive } from 'vue'
+import { useRouter } from 'vue-router'
+import axios from 'axios'
+
+const router=useRouter()
+
+const user = reactive({
+  username: '',
+  password: ''
+})
+
+async function login() {
+  try {
+    const { data } = await axios.post("http://191.52.55.23:19003/token/", user)
+    console.log(data)
+    router.push({name: 'cozinha'})
+  } catch(e) {
+    alert('Algum erro')
+  }
+}
+</script>
 <template>
   <main>
     <div class="container__login__form">
@@ -6,14 +27,13 @@
 
       <h1>Bem Vindo de volta!</h1>
       <div class="inputs">
-        <input class="input" type="text" placeholder="nome" />
-        <input class="input" type="text" placeholder="cpf" />
+        <input class="input" v-model="user.username" type="text" placeholder="nome" />
+        <input class="input" v-model="user.password" type="text" placeholder="cpf" />
       </div>
-      <router-link :to="{ name: 'cozinha' }">
         <div class="button">
-          <button>entrar</button>
+          <button @click="login">entrar</button>
         </div>
-      </router-link>
+      
     </div>
   </main>
 </template>
