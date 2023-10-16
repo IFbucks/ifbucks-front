@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import axiosInstance from '../../axios/axiosInstance'
 import { ref, onMounted } from 'vue'
 import AlertaComp from '../../components/AlertaComp.vue'
 
@@ -58,7 +58,7 @@ export default {
 
     async function getMesas() {
       try {
-        const response = await axios.get('http://localhost:8000/mesas')
+        const response = await axiosInstance.get('http://localhost:8000/mesas')
         mesas.value = response.data
       } catch (error) {
         setAlert('erro', 'Erro ao buscar mesas.')
@@ -67,7 +67,7 @@ export default {
 
     async function postMesa() {
       try {
-        const response = await axios.post('http://localhost:8000/mesas/', {
+        const response = await axiosInstance.post('http://localhost:8000/mesas/', {
           numero: numero_mesa.value,
           status: mesa_ativa.value
         })
@@ -81,7 +81,7 @@ export default {
 
     async function inativaMesa(id) {
       try {
-        await axios.put(`http://localhost:8000/mesas/${id}/`, {
+        await axiosInstance.put(`http://localhost:8000/mesas/${id}/`, {
           numero: mesas.value.find((mesa) => mesa.id === id).numero,
           status: false
         })
@@ -95,7 +95,7 @@ export default {
 
     async function ativaMesa(id) {
       try {
-        await axios.put(`http://localhost:8000/mesas/${id}/`, {
+        await axiosInstance.put(`http://localhost:8000/mesas/${id}/`, {
           numero: mesas.value.find((mesa) => mesa.id === id).numero,
           status: true
         })

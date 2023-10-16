@@ -16,7 +16,7 @@
 
 <script>
 import { ref, onMounted } from 'vue'
-import axios from 'axios'
+import axiosInstance from '../axios/axiosInstance'
 
 export default {
   name: 'PedidoComp',
@@ -31,7 +31,7 @@ export default {
 
     async function getProduto() {
       try {
-        const response = await axios.get(`http://localhost:8000/produtos/${props.pedido.produto}/`)
+        const response = await axiosInstance.get(`/produtos/${props.pedido.produto}/`)
         const data = await response.data
 
         produto.value = data

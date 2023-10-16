@@ -3,7 +3,7 @@ import { reactive } from 'vue'
 import { useRouter } from 'vue-router'
 import axios from 'axios'
 
-const router=useRouter()
+const router = useRouter()
 
 const user = reactive({
   username: '',
@@ -12,10 +12,14 @@ const user = reactive({
 
 async function login() {
   try {
-    const { data } = await axios.post("http://191.52.55.23:19003/token/", user) /*precisa ser endereço universal*/ 
-    console.log(data)
-    router.push({name: 'cozinha'})
-  } catch(e) {
+    const response = await axios.post(import.meta.env.VITE_TOKEN_URL, user)
+    const { access, refresh } = response.data
+
+    localStorage.setItem('access', access)
+    localStorage.setItem('refresh', refresh)
+
+    router.push({ name: 'cozinha' })
+  } catch (e) {
     alert('Algum erro')
   }
 }
@@ -30,10 +34,9 @@ async function login() {
         <input class="input" v-model="user.username" type="text" placeholder="nome" />
         <input class="input" v-model="user.password" type="text" placeholder="cpf" />
       </div>
-        <div class="button">
-          <button @click="login">entrar</button>
-        </div>
-      
+      <div class="button">
+        <button @click="login">entrar</button>
+      </div>
     </div>
   </main>
 </template>

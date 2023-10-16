@@ -11,15 +11,21 @@
           <table class="table table-bordered table-striped">
             <thead class="table-header">
               <tr>
-                <th scope="col">Mesa</th>
-                <th scope="col">Pedidos</th>
+                <th scope="col">Horário do pedido</th>
+                <th scope="col">Quantidade</th>
                 <th scope="col">Status</th>
-                <th scope="col">Cliente</th>
+                <th scope="col">Carrinho</th>
                 <th scope="col">Ações</th>
               </tr>
             </thead>
             <tbody>
-              <CozinhaTableRow v-for="pedido in pedidos" :key="pedido.id" :pedido="pedido" />
+              <CozinhaTableRow
+                v-for="pedido in pedidos"
+                :key="pedido.id"
+                :pedido="pedido"
+                :entregar="entregar"
+                :excluir="excluir"
+              />
             </tbody>
           </table>
         </div>
@@ -30,7 +36,7 @@
 
 <script>
 import { ref, onMounted } from 'vue'
-import axios from 'axios'
+import axiosInstance from '../../axios/axiosInstance'
 
 import CozinhaTableRow from '../../components/CozinhaTableRow.vue'
 
@@ -40,20 +46,49 @@ export default {
     const pedidos = ref([])
     async function getPedidos() {
       try {
-        const response = await axios.get('http://127.0.0.1:8000/carrinho/')
+        const response = await axiosInstance.get('/pedidos/')
         const data = response.data
         pedidos.value = data
       } catch (e) {
         console.log(e)
       }
     }
+
+    async function entregar(id) {
+      try {
+        await axiosInstance.patch(`/pedidos/${id}/`, {
+          entregue: true
+        })
+
+        this.pedidos = this.pedidos.map((pedido) => {
+          if (pedido.id === id) {
+            pedido.entregue = true
+          }
+          return pedido
+        })
+      } catch (e) {
+        console.log(e)
+      }
+    }
+
+    async function excluir(id) {
+      try {
+        await axiosInstance.delete(`/pedidos/${id}/`)
+        this.pedidos = this.pedidos.filter((pedido) => pedido.id !== id)
+      } catch (e) {
+        console.log(e)
+      }
+    }
+
     onMounted(() => {
       getPedidos()
     })
     return {
-      pedidos
+      pedidos,
+      entregar,
+      excluir
     }
-  },
+  }
 }
 </script>
 

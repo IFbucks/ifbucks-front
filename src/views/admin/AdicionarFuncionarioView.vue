@@ -6,7 +6,7 @@
       :tipo="alertaTipo"
       :fecharAlerta="fecharAlerta"
     />
-    <h1>Cadastrar Novo Funcionário</h1>
+    <h1>{{ editingFuncionarioId ? 'Editar Funcionário' : 'Cadastrar Novo Funcionário' }}</h1>
     <div class="form">
       <div class="grupo-inputs">
         <label for="nome">Nome:</label>
@@ -24,8 +24,8 @@
         <label for="cargo">Cargo:</label>
         <select v-model="cargo" id="cargo">
           <option value="" disabled selected>Selecione um Cargo</option>
-          <option v-for="cargo in cargos" :key="cargo.id" :value="cargo.value">
-            {{ cargo.value }}
+          <option v-for="cargoOption in cargos" :key="cargoOption.id" :value="cargoOption.value">
+            {{ cargoOption.value }}
           </option>
         </select>
       </div>
@@ -33,8 +33,15 @@
         <label for="imagem">Imagem:</label>
         <input type="file" ref="fileInput" @change="handleFileChange" />
       </div>
-      <button @click="postFuncionario">Adicionar</button>
-      <button @click="cancelarEdicaoFuncionario" v-if="editingFuncionarioId">Cancelar</button>
+
+      <div class="grupo-botoes">
+        <button @click="cancelarEdicaoFuncionario" v-if="editingFuncionarioId">Cancelar</button>
+        <button
+          @click="editingFuncionarioId ? putFuncionario(editingFuncionarioId) : postFuncionario()"
+        >
+          {{ editingFuncionarioId ? 'Salvar' : 'Adicionar' }}
+        </button>
+      </div>
     </div>
 
     <div class="funcionarios">
@@ -56,7 +63,7 @@
 
 <script>
 import FuncionarioComp from '@/components/FuncionarioComp.vue'
-import axios from 'axios'
+import axiosInstance from '../../axios/axiosInstance'
 import AlertaComp from '../../components/AlertaComp.vue'
 
 export default {
@@ -68,18 +75,15 @@ export default {
       cargo: '',
       imagem: null,
       funcionarios: [],
-      funcionarioAdicionado: false,
       editingFuncionarioId: null,
-
       alertaAtivo: false,
       alertaTipo: 'erro',
       alertaMensagem: 'Algo deu errado',
-
       cargos: [
         { value: 'Cliente', id: 1 },
-        { value: 'Funcionário', id: 2 },
-        { value: 'Gerente', id: 3 },
-        { value: 'Garçom', id: 4 }
+        { value: 'Garçom', id: 2 },
+        { value: 'Cozinheiro', id: 3 },
+        { value: 'Gerente', id: 4 }
       ]
     }
   },
@@ -96,33 +100,44 @@ export default {
       this.alertaTipo = type
       this.alertaMensagem = mensagem
     },
+    handleFileChange(event) {
+      this.imagem = event.target.files[0]
+    },
     async getFuncionarios() {
       try {
-        const response = await axios.get('http://localhost:8000/usuarios/')
+        const response = await axiosInstance.get('http://localhost:8000/usuarios/')
         this.funcionarios = response.data
       } catch (error) {
         console.error('Erro ao buscar funcionários:', error)
         this.setAlert('erro', 'Erro ao buscar funcionários')
       }
     },
-    handleFileChange(event) {
-      this.imagem = event.target.files[0]
-    },
+
     async postFuncionario() {
       if (!this.nome || !this.email || !this.cpf || !this.cargo || !this.imagem) {
         this.setAlert('erro', 'Todos os campos são obrigatórios')
         return
       }
 
-      const formData = new FormData()
-      formData.append('cpf', this.cpf)
-      formData.append('email', this.email)
-      formData.append('nome', this.nome)
-      formData.append('tipopessoa', parseInt(this.cargo))
-      formData.append('imagem', this.imagem)
+      const novoFuncionario = {
+        id: 3,
+        cpf: '9876542154',
+        cargo: 'Cliente',
+        email: 'Cliente@cliente.com',
+        nome: 'asdasd',
+        imagem: null
+      }
 
       try {
-        const response = await axios.post('http://localhost:8000/usuarios/', formData)
+        const response = await axiosInstance.post(
+          'http://localhost:8000/usuarios/',
+          novoFuncionario,
+          {
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          }
+        )
         this.funcionarios.push(response.data)
         this.limparCampos()
         this.funcionarioAdicionado = true
@@ -134,7 +149,7 @@ export default {
     },
     async deleteFuncionario(id) {
       try {
-        await axios.delete(`http://localhost:8000/usuarios/${id}/`)
+        await axiosInstance.delete(`http://localhost:8000/usuarios/${id}/`)
         this.funcionarios = this.funcionarios.filter((funcionario) => funcionario.id !== id)
         this.setAlert('sucesso', 'Funcionário excluído com sucesso')
       } catch (error) {
@@ -142,52 +157,48 @@ export default {
         this.setAlert('erro', 'Erro ao excluir funcionário')
       }
     },
-    async editaFuncionario(id, nome, cpf, email, cargo) {
-      const dadosAtualizados = {
-        cpf,
-        email,
-        nome,
-        tipopessoa: parseInt(cargo)
+    async putFuncionario(id) {
+      const funcionarioEditado = {
+        nome: this.nome,
+        email: this.email,
+        cpf: this.cpf,
+        cargo: this.cargo,
+        imagem: this.imagem
       }
 
       try {
-        await axios.put(`http://localhost:8000/usuarios/${id}/`, dadosAtualizados)
-        this.funcionarios = this.funcionarios.map((funcionario) => {
-          if (funcionario.id === id) {
-            funcionario.cpf = cpf
-            funcionario.email = email
-            funcionario.nome = nome
-            funcionario.tipopessoa = parseInt(cargo)
-          }
-          return funcionario
-        })
-        this.limparCampos()
-        this.setAlert('sucesso', 'Funcionário editado com sucesso')
+        console.log(funcionarioEditado)
+        const response = await axiosInstance.put(
+          `http://localhost:8000/usuarios/${id}/`,
+          funcionarioEditado
+        )
+
+        const novosFuncionarios = this.funcionarios.map((funcionario) =>
+          funcionario.id === id ? response.data : funcionario
+        )
+
+        this.funcionarios = novosFuncionarios
       } catch (error) {
-        console.error('Erro ao editar funcionário:', error)
-        this.setAlert('erro', 'Erro ao editar funcionário')
+        console.error('Erro ao buscar funcionários:', error)
+        this.setAlert('erro', 'Erro ao buscar funcionários')
       }
     },
     handleEdit(id) {
-      const nome = prompt('Digite o novo nome do funcionário:')
-      const cpf = prompt('Digite o novo CPF do funcionário:')
-      const email = prompt('Digite o novo email do funcionário:')
-      const cargo = prompt('Digite o novo cargo do funcionário:')
-      if (nome !== null && cpf !== null && email !== null && cargo !== null) {
-        this.editaFuncionario(id, nome, cpf, email, cargo)
-      }
+      const funcionario = this.funcionarios.find((func) => func.id === id)
+
+      this.nome = funcionario.nome
+      this.email = funcionario.email
+      this.cpf = funcionario.cpf
+      this.cargo = funcionario.cargo
+      this.editingFuncionarioId = id
     },
     cancelarEdicaoFuncionario() {
-      this.limparCampos()
-    },
-    limparCampos() {
       this.nome = ''
       this.email = ''
       this.cpf = ''
       this.cargo = ''
       this.imagem = null
       this.editingFuncionarioId = null
-      this.funcionarioAdicionado = false
     }
   },
   mounted() {
@@ -249,6 +260,17 @@ button:hover {
   flex-direction: column;
   width: 100%;
   gap: 1em;
+}
+
+.grupo-botoes {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  gap: 1em;
+}
+
+.grupo-botoes > button {
+  width: 100%;
 }
 
 .feedback {

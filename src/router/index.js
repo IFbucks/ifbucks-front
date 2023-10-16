@@ -77,4 +77,20 @@ const router = createRouter({
   routes
 })
 
+const isAuthenticated = () => {
+  if (localStorage.getItem('access')) {
+    return true
+  } else {
+    return false
+  }
+}
+
+router.beforeEach((to, from, next) => {
+  if (to.name !== 'home' && !isAuthenticated()) {
+    next({ name: 'home' }) // Redireciona para a página de login se não estiver autenticado
+  } else {
+    next() // Continua a navegação
+  }
+})
+
 export default router

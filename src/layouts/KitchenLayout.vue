@@ -2,6 +2,7 @@
 import { ref, onMounted } from 'vue'
 import HeaderComp from '../components/HeaderComp.vue'
 import SidebarComp from '../components/SidebarComp.vue'
+import axiosInstance from '../axios/axiosInstance'
 
 export default {
   components: {
@@ -14,8 +15,9 @@ export default {
     const sidebar_items = ref([])
 
     async function getMesas() {
-      const response = await fetch('http://localhost:8000/mesas/')
-      const data = await response.json()
+      const response = await axiosInstance.get('/mesas/')
+      console.log(response)
+      const data = await response.data
       const mesas = data.map((i) => ({
         to: `/mesa/${i.id}`,
         title: `Mesa ${i.numero}`

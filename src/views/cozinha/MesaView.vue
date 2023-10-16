@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import axiosInstance from '../../axios/axiosInstance'
 import { ref, onMounted, watch } from 'vue'
 import { useRoute } from 'vue-router'
 
@@ -28,7 +28,9 @@ export default {
 
     async function getCarrinho() {
       try {
-        const response = await axios.get(`http://localhost:8000/mesas/${mesa_id.value}/carrinho/`)
+        const response = await axiosInstance.get(
+          `http://localhost:8000/mesas/${mesa_id.value}/carrinho/`
+        )
         const data = await response.data
 
         carrinho.value = data
@@ -39,7 +41,9 @@ export default {
 
     async function getPedidos() {
       try {
-        const response = await axios.get(`http://localhost:8000/mesas/${mesa_id.value}/pedidos/`)
+        const response = await axiosInstance.get(
+          `http://localhost:8000/mesas/${mesa_id.value}/pedidos/`
+        )
         const data = await response.data
 
         pedidos.value = data

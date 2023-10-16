@@ -42,7 +42,7 @@
 
 <script>
 import ItemComp from '@/components/ItemComp.vue'
-import axios from 'axios'
+import axiosInstance from '../../axios/axiosInstance'
 import AlertaComp from '../../components/AlertaComp.vue'
 
 export default {
@@ -77,7 +77,7 @@ export default {
     },
     async getCategorias() {
       try {
-        const response = await axios.get('http://localhost:8000/categorias/')
+        const response = await axiosInstance.get('http://localhost:8000/categorias/')
         this.categorias = response.data
       } catch (error) {
         console.error('Erro ao obter categorias:', error)
@@ -86,7 +86,7 @@ export default {
     },
     async getProdutos() {
       try {
-        const response = await axios.get('http://localhost:8000/produtos/')
+        const response = await axiosInstance.get('http://localhost:8000/produtos/')
         this.produtos = response.data
       } catch (error) {
         console.error('Erro ao buscar produtos:', error)
@@ -102,15 +102,21 @@ export default {
         return
       }
 
-      const formData = new FormData()
-      formData.append('nome', this.nome)
-      formData.append('descricao', this.descricao)
-      formData.append('preco', this.preco)
-      formData.append('categoria', this.categoria)
-      formData.append('imagem', this.imagem)
+      const novoProduto = {
+        nome: this.nome,
+        descricao: this.descricao,
+        preco: parseFloat(this.preco),
+        categoria: this.categoria,
+        imagem: this.imagem
+      }
 
       try {
-        const response = await axios.post('http://localhost:8000/produtos/', formData)
+        console.log(novoProduto)
+        const response = await axiosInstance.post('http://localhost:8000/produtos/', novoProduto, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        })
         this.produtos.push(response.data)
         this.limparCampos()
         this.setAlert('sucesso', 'Produto adicionado com sucesso')
@@ -121,7 +127,7 @@ export default {
     },
     async deleteProduto(id) {
       try {
-        await axios.delete(`http://localhost:8000/produtos/${id}/`)
+        await axiosInstance.delete(`http://localhost:8000/produtos/${id}/`)
         this.produtos = this.produtos.filter((produto) => produto.id !== id)
         this.setAlert('sucesso', 'Produto excluído com sucesso')
       } catch (error) {
@@ -143,15 +149,20 @@ export default {
         return
       }
 
-      const formData = new FormData()
-      formData.append('nome', this.nome)
-      formData.append('descricao', this.descricao)
-      formData.append('preco', this.preco)
-      formData.append('categoria', this.categoria)
-      formData.append('imagem', this.imagem)
+      const novoProduto = {
+        nome: this.nome,
+        descricao: this.descricao,
+        preco: parseFloat(this.preco),
+        categoria: this.categoria,
+        imagem: this.imagem
+      }
 
       try {
-        await axios.put(`http://localhost:8000/produtos/${this.editingProductId}/`, formData)
+        console.log(novoProduto)
+        await axiosInstance.put(
+          `http://localhost:8000/produtos/${this.editingProductId}/`,
+          novoProduto
+        )
         this.produtos = this.produtos.map((produto) => {
           if (produto.id === this.editingProductId) {
             produto.nome = this.nome

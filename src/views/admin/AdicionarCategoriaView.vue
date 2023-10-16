@@ -32,7 +32,7 @@
 
 <script>
 import CategoriaComp from '@/components/CategoriaComp.vue'
-import axios from 'axios'
+import axiosInstance from '../../axios/axiosInstance'
 import AlertaComp from '../../components/AlertaComp.vue'
 
 export default {
@@ -61,7 +61,7 @@ export default {
     },
     async getCategorias() {
       try {
-        const response = await axios.get('http://localhost:8000/categorias/')
+        const response = await axiosInstance.get('http://localhost:8000/categorias/')
         this.categorias = response.data
       } catch (error) {
         console.error('Erro ao buscar categorias:', error)
@@ -78,7 +78,10 @@ export default {
           nome: this.nome,
           descricao: this.descricao
         }
-        const response = await axios.post('http://localhost:8000/categorias/', novaCategoria)
+        const response = await axiosInstance.post(
+          'http://localhost:8000/categorias/',
+          novaCategoria
+        )
         this.categorias.push(response.data)
         this.nome = ''
         this.descricao = ''
@@ -90,7 +93,7 @@ export default {
     },
     async deleteCategoria(id) {
       try {
-        await axios.delete(`http://localhost:8000/categorias/${id}/`)
+        await axiosInstance.delete(`http://localhost:8000/categorias/${id}/`)
         // Remove a categoria com o id correspondente da lista
         this.categorias = this.categorias.filter((categoria) => categoria.id !== id)
         this.setAlert('sucesso', 'Categoria excluída com sucesso')
@@ -102,7 +105,7 @@ export default {
 
     async editaCategoria(id, nome) {
       try {
-        await axios.put(`http://localhost:8000/categorias/${id}/`, { descricao: nome })
+        await axiosInstance.put(`http://localhost:8000/categorias/${id}/`, { descricao: nome })
         // Remove a categoria com o id correspondente da lista
         this.categorias = this.categorias.map((categoria) => {
           if (categoria.id === id) {

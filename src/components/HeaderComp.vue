@@ -12,7 +12,7 @@
 
       <router-link to="/admin/categorias">Administração</router-link>
 
-      <router-link to="/">Sair</router-link>
+      <router-link to="/" @click="localStorage.clear()">Sair</router-link>
     </div>
   </div>
 </template>
