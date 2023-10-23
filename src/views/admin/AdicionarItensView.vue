@@ -157,12 +157,11 @@ export default {
         imagem: this.imagem
       }
 
+      console.log(this.imagem)
+
       try {
         console.log(novoProduto)
-        await axiosInstance.put(
-          `http://localhost:8000/produtos/${this.editingProductId}/`,
-          novoProduto
-        )
+        await axiosInstance.put(`/produtos/${this.editingProductId}/`, novoProduto)
         this.produtos = this.produtos.map((produto) => {
           if (produto.id === this.editingProductId) {
             produto.nome = this.nome

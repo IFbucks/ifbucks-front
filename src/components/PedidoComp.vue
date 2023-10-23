@@ -78,6 +78,10 @@ export default {
 
 .pedido__title {
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
 }
 
 .pedido__title h1 {

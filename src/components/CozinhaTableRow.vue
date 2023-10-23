@@ -12,7 +12,7 @@
       }}
     </td>
     <td>{{ pedido.quantidade }}</td>
-    <td>{{ pedido.status ? 'Entregue' : 'Pendente' }}</td>
+    <td>{{ pedido.entregue ? 'Entregue' : 'Pendente' }}</td>
     <td>{{ pedido.carrinho }}</td>
     <td>
       <button class="btn btn-success" @click="entregar(pedido.id)">Entregue</button>

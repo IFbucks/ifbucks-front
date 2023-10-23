@@ -120,24 +120,16 @@ export default {
       }
 
       const novoFuncionario = {
-        id: 3,
-        cpf: '9876542154',
-        cargo: 'Cliente',
-        email: 'Cliente@cliente.com',
-        nome: 'asdasd',
+        nome: this.nome,
+        email: this.email,
+        cpf: this.cpf,
+        cargo: this.cargo,
         imagem: null
       }
 
       try {
-        const response = await axiosInstance.post(
-          'http://localhost:8000/usuarios/',
-          novoFuncionario,
-          {
-            headers: {
-              'Content-Type': 'application/json'
-            }
-          }
-        )
+        const response = await axiosInstance.post('/usuarios/', novoFuncionario)
+        console.log(response.data)
         this.funcionarios.push(response.data)
         this.limparCampos()
         this.funcionarioAdicionado = true

@@ -25,7 +25,13 @@
                 :pedido="pedido"
                 :entregar="entregar"
                 :excluir="excluir"
+                :v-show="pedido.entregue == false"
+                v-if="pedidos.length !== 0"
               />
+
+              <tr v-if="pedidos.length === 0">
+                <td colspan="5" class="text-center">Não há pedidos para serem entregues</td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -60,8 +66,10 @@ export default {
           entregue: true
         })
 
-        this.pedidos = this.pedidos.map((pedido) => {
-          if (pedido.id === id) {
+        console.log(pedidos.value)
+
+        pedidos.value = pedidos.value.map((pedido) => {
+          if (pedido.target.id === id) {
             pedido.entregue = true
           }
           return pedido

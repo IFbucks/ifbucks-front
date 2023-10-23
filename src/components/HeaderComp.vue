@@ -12,7 +12,7 @@
 
       <router-link to="/admin/categorias">Administração</router-link>
 
-      <router-link to="/" @click="localStorage.clear()">Sair</router-link>
+      <button @click="sair">Sair</button>
     </div>
   </div>
 </template>
@@ -26,6 +26,12 @@ export default {
     deleteCategoria: Function,
     editaCategoria: Function,
     id: Number
+  },
+  methods: {
+    sair() {
+      localStorage.clear()
+      this.$router.push('/')
+    }
   }
 }
 </script>
@@ -53,7 +59,11 @@ export default {
   width: 100%;
 }
 
-a {
+a,
+button {
+  background-color: #16a34a;
+  border: none;
+  font-size: 1em;
   cursor: pointer;
   color: white;
 
@@ -63,7 +73,8 @@ a {
   border-radius: 1em;
 }
 
-a:hover {
+a:hover,
+button:hover {
   background-color: #15803d;
 }
 

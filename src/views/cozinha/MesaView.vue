@@ -4,7 +4,17 @@
   </div>
 
   <div>
-    <PedidoComp v-for="pedido in pedidos" :key="pedido.id" :pedido="pedido" />
+    <PedidoComp
+      v-for="pedido in pedidos"
+      :key="pedido.id"
+      :pedido="pedido"
+      :v-if="pedido.entregue === false"
+      v-if="pedidos.length !== 0"
+    />
+
+    <div v-if="pedidos.length === 0">
+      <p>Não há pedidos para essa mesa</p>
+    </div>
   </div>
 </template>
 
