@@ -77,7 +77,7 @@ export default {
     },
     async getCategorias() {
       try {
-        const response = await axiosInstance.get('http://localhost:8000/categorias/')
+        const response = await axiosInstance.get('https://ifbucks.1.ie-1.fl0.io/categorias/')
         this.categorias = response.data
       } catch (error) {
         console.error('Erro ao obter categorias:', error)
@@ -86,7 +86,7 @@ export default {
     },
     async getProdutos() {
       try {
-        const response = await axiosInstance.get('http://localhost:8000/produtos/')
+        const response = await axiosInstance.get('https://ifbucks.1.ie-1.fl0.io/produtos/')
         this.produtos = response.data
       } catch (error) {
         console.error('Erro ao buscar produtos:', error)
@@ -112,7 +112,7 @@ export default {
 
       try {
         console.log(novoProduto)
-        const response = await axiosInstance.post('http://localhost:8000/produtos/', novoProduto, {
+        const response = await axiosInstance.post('https://ifbucks.1.ie-1.fl0.io/produtos/', novoProduto, {
           headers: {
             'Content-Type': 'multipart/form-data'
           }
@@ -127,7 +127,7 @@ export default {
     },
     async deleteProduto(id) {
       try {
-        await axiosInstance.delete(`http://localhost:8000/produtos/${id}/`)
+        await axiosInstance.delete(`https://ifbucks.1.ie-1.fl0.io/produtos/${id}/`)
         this.produtos = this.produtos.filter((produto) => produto.id !== id)
         this.setAlert('sucesso', 'Produto excluído com sucesso')
       } catch (error) {

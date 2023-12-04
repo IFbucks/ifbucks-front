@@ -61,7 +61,7 @@ export default {
     },
     async getCategorias() {
       try {
-        const response = await axiosInstance.get('http://localhost:8000/categorias/')
+        const response = await axiosInstance.get('https://ifbucks.1.ie-1.fl0.io/categorias/')
         this.categorias = response.data
       } catch (error) {
         console.error('Erro ao buscar categorias:', error)
@@ -79,7 +79,7 @@ export default {
           descricao: this.descricao
         }
         const response = await axiosInstance.post(
-          'http://localhost:8000/categorias/',
+          'https://ifbucks.1.ie-1.fl0.io/categorias/',
           novaCategoria
         )
         this.categorias.push(response.data)
@@ -93,7 +93,7 @@ export default {
     },
     async deleteCategoria(id) {
       try {
-        await axiosInstance.delete(`http://localhost:8000/categorias/${id}/`)
+        await axiosInstance.delete(`https://ifbucks.1.ie-1.fl0.io/categorias/${id}/`)
         // Remove a categoria com o id correspondente da lista
         this.categorias = this.categorias.filter((categoria) => categoria.id !== id)
         this.setAlert('sucesso', 'Categoria excluída com sucesso')
@@ -105,7 +105,7 @@ export default {
 
     async editaCategoria(id, nome) {
       try {
-        await axiosInstance.put(`http://localhost:8000/categorias/${id}/`, { descricao: nome })
+        await axiosInstance.put(`https://ifbucks.1.ie-1.fl0.io/categorias/${id}/`, { descricao: nome })
         // Remove a categoria com o id correspondente da lista
         this.categorias = this.categorias.map((categoria) => {
           if (categoria.id === id) {

@@ -105,7 +105,7 @@ export default {
     },
     async getFuncionarios() {
       try {
-        const response = await axiosInstance.get('http://localhost:8000/usuarios/')
+        const response = await axiosInstance.get('https://ifbucks.1.ie-1.fl0.io/usuarios/')
         this.funcionarios = response.data
       } catch (error) {
         console.error('Erro ao buscar funcionários:', error)
@@ -141,7 +141,7 @@ export default {
     },
     async deleteFuncionario(id) {
       try {
-        await axiosInstance.delete(`http://localhost:8000/usuarios/${id}/`)
+        await axiosInstance.delete(`https://ifbucks.1.ie-1.fl0.io/usuarios/${id}/`)
         this.funcionarios = this.funcionarios.filter((funcionario) => funcionario.id !== id)
         this.setAlert('sucesso', 'Funcionário excluído com sucesso')
       } catch (error) {
@@ -161,7 +161,7 @@ export default {
       try {
         console.log(funcionarioEditado)
         const response = await axiosInstance.put(
-          `http://localhost:8000/usuarios/${id}/`,
+          `https://ifbucks.1.ie-1.fl0.io/usuarios/${id}/`,
           funcionarioEditado
         )
 

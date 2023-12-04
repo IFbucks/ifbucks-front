@@ -39,7 +39,7 @@ export default {
     async function getCarrinho() {
       try {
         const response = await axiosInstance.get(
-          `http://localhost:8000/mesas/${mesa_id.value}/carrinho/`
+          `https://ifbucks.1.ie-1.fl0.io/mesas/${mesa_id.value}/carrinho/`
         )
         const data = await response.data
 
@@ -52,7 +52,7 @@ export default {
     async function getPedidos() {
       try {
         const response = await axiosInstance.get(
-          `http://localhost:8000/mesas/${mesa_id.value}/pedidos/`
+          `https://ifbucks.1.ie-1.fl0.io/mesas/${mesa_id.value}/pedidos/`
         )
         const data = await response.data
 
