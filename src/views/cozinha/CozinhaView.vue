@@ -16,6 +16,7 @@
                 <th scope="col">Status</th>
                 <th scope="col">Carrinho</th>
                 <th scope="col">Ações</th>
+                <!--v-if="pedidos.length !== 0"-->
               </tr>
             </thead>
             <tbody>
@@ -26,7 +27,7 @@
                 :entregar="entregar"
                 :excluir="excluir"
                 :v-show="pedido.entregue == false"
-                v-if="pedidos.length !== 0"
+                :v-if="pedidos.length !== 0"
               />
 
               <tr v-if="pedidos.length === 0">
@@ -52,7 +53,8 @@ export default {
     const pedidos = ref([])
     async function getPedidos() {
       try {
-        const response = await axiosInstance.get('/pedidos/')
+        //const response = await axiosInstance.get('/pedidos/')
+        const response = await axiosInstance.get('https://ifbucks.1.ie-1.fl0.io/pedidos/')
         const data = response.data
         pedidos.value = data
       } catch (e) {
@@ -62,7 +64,9 @@ export default {
 
     async function entregar(id) {
       try {
-        await axiosInstance.patch(`/pedidos/${id}/`, {
+
+        //await axiosInstance.patch(`/pedidos/${id}/`, {
+        await axiosInstance.patch(`https://ifbucks.1.ie-1.fl0.io/pedidos/${id}/`, {
           entregue: true
         })
 
@@ -81,7 +85,8 @@ export default {
 
     async function excluir(id) {
       try {
-        await axiosInstance.delete(`/pedidos/${id}/`)
+        //await axiosInstance.delete(`/pedidos/${id}/`)
+        await axiosInstance.delete(`https://ifbucks.1.ie-1.fl0.io/pedidos/${id}/`)
         this.pedidos = this.pedidos.filter((pedido) => pedido.id !== id)
       } catch (e) {
         console.log(e)

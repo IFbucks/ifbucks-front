@@ -58,7 +58,7 @@ export default {
 
     async function getMesas() {
       try {
-        const response = await axiosInstance.get('https://ifbucks.1.ie-1.fl0.io/mesas')
+        const response = await axiosInstance.get('https://ifbucks.1.ie-1.fl0.io/mesas/')
         mesas.value = response.data
       } catch (error) {
         setAlert('erro', 'Erro ao buscar mesas.')

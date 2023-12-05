@@ -87,9 +87,9 @@ const isAuthenticated = () => {
 
 router.beforeEach((to, from, next) => {
   if (to.name !== 'home' && !isAuthenticated()) {
-    next({ name: 'home' }) // Redireciona para a página de login se não estiver autenticado
+    next({ name: 'home' }) 
   } else {
-    next() // Continua a navegação
+    next()
   }
 })
 

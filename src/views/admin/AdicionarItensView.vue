@@ -161,7 +161,7 @@ export default {
 
       try {
         console.log(novoProduto)
-        await axiosInstance.put(`/produtos/${this.editingProductId}/`, novoProduto)
+        await axiosInstance.put(`https://ifbucks.1.ie-1.fl0.io/produtos/${this.editingProductId}/`, novoProduto)
         this.produtos = this.produtos.map((produto) => {
           if (produto.id === this.editingProductId) {
             produto.nome = this.nome

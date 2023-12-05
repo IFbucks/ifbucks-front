@@ -9,7 +9,7 @@
       :key="pedido.id"
       :pedido="pedido"
       :v-if="pedido.entregue === false"
-      v-if="pedidos.length !== 0"
+      v-if="pedidos.length !== 0" 
     />
 
     <div v-if="pedidos.length === 0">
