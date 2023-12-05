@@ -22,6 +22,7 @@
       </div>
       <div class="grupo-inputs">
         <label for="cargo">Cargo:</label>
+
         <select v-model="cargo" id="cargo">
           <option value="" disabled selected>Selecione um Cargo</option>
           <option v-for="cargoOption in cargos" :key="cargoOption.id" :value="cargoOption.value">
@@ -128,7 +129,7 @@ export default {
       }
 
       try {
-        const response = await axiosInstance.post('/usuarios/', novoFuncionario)
+        const response = await axiosInstance.post('https://ifbucks.1.ie-1.fl0.io/usuarios/usuarios/', novoFuncionario)
         console.log(response.data)
         this.funcionarios.push(response.data)
         this.limparCampos()

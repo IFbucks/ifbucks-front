@@ -214,11 +214,8 @@ export default {
 .form {
   display: flex;
   flex-direction: column;
-
   align-items: start;
-
   width: 100%;
-
   gap: 2em;
   margin-bottom: 2em;
 }
@@ -226,7 +223,6 @@ export default {
 input,
 select {
   padding: 15px;
-
   outline: none;
   border-radius: 7px;
   background: #d9d9d9;
@@ -236,7 +232,6 @@ select {
 
 button {
   padding: 15px;
-
   outline: none;
   border-radius: 7px;
   background: #d9d9d9;
@@ -244,7 +239,6 @@ button {
   background-color: #379e3c;
   color: white;
   font-weight: 600;
-
   transition: all 0.5s;
 }
 
@@ -258,7 +252,6 @@ button:hover {
   flex-direction: row;
   justify-content: center;
   width: 100%;
-
   gap: 1em;
 }
 </style>
