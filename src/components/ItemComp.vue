@@ -33,7 +33,7 @@ export default {
   },
   methods: {
     editProduto() {
-      this.editaProduto(this.id)
+      this.$emit('editaProduto')
     },
     confirmDelete() {
       this.deleteitem(this.id)

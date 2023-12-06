@@ -31,10 +31,10 @@
         :nome="item.nome"
         :preco="item.preco"
         :descricao="item.descricao"
-        :deleteitem="deleteProduto"
-        :editaProduto="editaProduto"
         :imagem="item.imagem"
         :id="item.id"
+        @editaProduto="editaProduto(item)"
+        @deleteitem="deleteProduto(item.id)"
       />
     </div>
   </div>
@@ -135,13 +135,13 @@ export default {
         this.setAlert('erro', 'Erro ao excluir produto')
       }
     },
-    async editaProduto(id) {
-      const produto = this.produtos.find((produto) => produto.id === id)
+    async editaProduto(produto) {
+      // const produto = this.produtos.find((produto) => produto.id === id)
       this.nome = produto.nome
       this.descricao = produto.descricao
       this.preco = produto.preco
       this.categoria = produto.categoria
-      this.editingProductId = id
+      this.editingProductId = produto.id
     },
     async salvarEdicaoProduto() {
       if (!this.nome || !this.imagem || !this.editingProductId) {
