@@ -129,10 +129,10 @@ export default {
       }
 
       try {
-        const response = await axiosInstance.post('https://ifbucks.1.ie-1.fl0.io/usuarios/usuarios/', novoFuncionario)
+        const response = await axiosInstance.post('https://ifbucks.1.ie-1.fl0.io/usuarios/', novoFuncionario)
         console.log(response.data)
         this.funcionarios.push(response.data)
-        this.limparCampos()
+        //this.limparCampos()
         this.funcionarioAdicionado = true
         this.setAlert('sucesso', 'Funcionário adicionado com sucesso!')
       } catch (error) {
