@@ -56,7 +56,6 @@ export default {
       categorias: [],
       produtos: [],
       editingProductId: null,
-
       alertaAtivo: false,
       alertaTipo: 'erro',
       alertaMensagem: 'Algo deu errado'

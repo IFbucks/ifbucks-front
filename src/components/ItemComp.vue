@@ -36,7 +36,7 @@ export default {
       this.$emit('editaProduto')
     },
     confirmDelete() {
-      this.deleteitem(this.id)
+      this.$emit('deleteitem')
     }
   }
 }
