@@ -20,7 +20,13 @@
             {{ categoria.nome }}
           </option>
         </select>
-        <button @click="postProduto">Adicionar</button>
+
+        <div class="grupo-botoes">
+          <button @click="cancelarEdicaoProduto" v-if="editingProductId">Cancelar</button>
+          <button @click="editingProductId ? putProduto(editingProductId) : postProduto()">
+            {{ editingProductId ? 'Salvar' : 'Adicionar' }}
+          </button>
+        </div>
       </div>
     </div>
 
@@ -74,6 +80,7 @@ export default {
       this.alertaTipo = type
       this.alertaMensagem = mensagem
     },
+
     async getCategorias() {
       try {
         const response = await axiosInstance.get('https://ifbucks.1.ie-1.fl0.io/categorias/')
@@ -81,6 +88,51 @@ export default {
       } catch (error) {
         console.error('Erro ao obter categorias:', error)
         this.setAlert('erro', 'Erro ao obter categorias')
+      }
+    },
+
+    async putProduto(produtoId) {
+      console.log(produtoId)
+      if (!this.nome || !this.imagem || !produtoId) {
+        this.setAlert('erro', 'O nome do produto e a imagem são obrigatórios')
+        return
+      }
+
+      const novoProduto = {
+        nome: this.nome,
+        descricao: this.descricao,
+        preco: parseFloat(this.preco),
+        categoria: this.categoria,
+        imagem: this.imagem
+      }
+
+      console.log(this.imagem)
+
+      try {
+        console.log(novoProduto)
+        await axiosInstance.put(
+          `https://ifbucks.1.ie-1.fl0.io/produtos/${produtoId}/`,
+          novoProduto,
+          {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          }
+        )
+        this.produtos = this.produtos.map((produto) => {
+          if (produto.id === produtoId) {
+            produto.nome = this.nome
+            produto.descricao = this.descricao
+            produto.preco = this.preco
+            produto.categoria = this.categoria
+          }
+          return produto
+        })
+        this.limparCampos()
+        this.setAlert('sucesso', 'Produto editado com sucesso')
+      } catch (error) {
+        console.error('Erro ao editar produto:', error)
+        this.setAlert('erro', 'Erro ao editar produto')
       }
     },
     async getProdutos() {
@@ -111,11 +163,15 @@ export default {
 
       try {
         console.log(novoProduto)
-        const response = await axiosInstance.post('https://ifbucks.1.ie-1.fl0.io/produtos/', novoProduto, {
-          headers: {
-            'Content-Type': 'multipart/form-data'
+        const response = await axiosInstance.post(
+          'https://ifbucks.1.ie-1.fl0.io/produtos/',
+          novoProduto,
+          {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
           }
-        })
+        )
         this.produtos.push(response.data)
         this.limparCampos()
         this.setAlert('sucesso', 'Produto adicionado com sucesso')
@@ -160,7 +216,10 @@ export default {
 
       try {
         console.log(novoProduto)
-        await axiosInstance.put(`https://ifbucks.1.ie-1.fl0.io/produtos/${this.editingProductId}/`, novoProduto)
+        await axiosInstance.put(
+          `https://ifbucks.1.ie-1.fl0.io/produtos/${this.editingProductId}/`,
+          novoProduto
+        )
         this.produtos = this.produtos.map((produto) => {
           if (produto.id === this.editingProductId) {
             produto.nome = this.nome
@@ -217,6 +276,13 @@ export default {
   width: 100%;
   gap: 2em;
   margin-bottom: 2em;
+}
+
+.grupo-botoes {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  gap: 1em;
 }
 
 input,

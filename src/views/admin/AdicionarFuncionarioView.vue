@@ -7,7 +7,13 @@
       :fecharAlerta="fecharAlerta"
     />
     <h1>{{ editingFuncionarioId ? 'Editar Funcionário' : 'Cadastrar Novo Funcionário' }}</h1>
-    <form class="form" @submit.prevent="editingFuncionarioId ? putFuncionario(editingFuncionarioId) : postFuncionario()" enctype="multipart/form-data">
+    <form
+      class="form"
+      @submit.prevent="
+        editingFuncionarioId ? putFuncionario(editingFuncionarioId) : postFuncionario()
+      "
+      enctype="multipart/form-data"
+    >
       <div class="grupo-inputs">
         <label for="nome">Nome:</label>
         <input type="text" v-model="nome" id="nome" placeholder="Nome" />
@@ -38,7 +44,9 @@
       <div class="grupo-botoes">
         <button @click="cancelarEdicaoFuncionario" v-if="editingFuncionarioId">Cancelar</button>
         <button
-          @submit.prevent="editingFuncionarioId ? putFuncionario(editingFuncionarioId) : postFuncionario()"
+          @submit.prevent="
+            editingFuncionarioId ? putFuncionario(editingFuncionarioId) : postFuncionario()
+          "
         >
           {{ editingFuncionarioId ? 'Salvar' : 'Adicionar' }}
         </button>
@@ -123,8 +131,8 @@ export default {
 
       if (!(this.imagem instanceof File)) {
         this.setAlert('erro', 'O campo de imagem deve conter um arquivo válido')
-      return
-    }
+        return
+      }
 
       const novoFuncionario = {
         nome: this.nome,
@@ -135,7 +143,10 @@ export default {
       }
 
       try {
-        const response = await axiosInstance.post('https://ifbucks.1.ie-1.fl0.io/usuarios/', novoFuncionario)
+        const response = await axiosInstance.post(
+          'https://ifbucks.1.ie-1.fl0.io/usuarios/',
+          novoFuncionario
+        )
         console.log(response.data)
         this.funcionarios.push(response.data)
         //this.limparCampos()
@@ -169,7 +180,12 @@ export default {
         console.log(funcionarioEditado)
         const response = await axiosInstance.put(
           `https://ifbucks.1.ie-1.fl0.io/usuarios/${id}/`,
-          funcionarioEditado
+          funcionarioEditado,
+          {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          }
         )
 
         const novosFuncionarios = this.funcionarios.map((funcionario) =>
@@ -183,15 +199,15 @@ export default {
       }
     },
     handleEdit(id) {
-  const funcionario = this.funcionarios.find((func) => func.id === id)
+      const funcionario = this.funcionarios.find((func) => func.id === id)
 
-  this.nome = funcionario.nome
-  this.email = funcionario.email
-  this.cpf = funcionario.cpf
-  this.cargo = funcionario.cargo
-  this.imagem = null 
-  this.editingFuncionarioId = id
-},
+      this.nome = funcionario.nome
+      this.email = funcionario.email
+      this.cpf = funcionario.cpf
+      this.cargo = funcionario.cargo
+      this.imagem = null
+      this.editingFuncionarioId = id
+    },
 
     cancelarEdicaoFuncionario() {
       this.nome = ''
