@@ -31,8 +31,8 @@ async function login() {
 
       <h1>Bem Vindo de volta!</h1>
       <div class="inputs">
-        <input class="input" v-model="user.username" type="text" placeholder="nome" />
-        <input class="input" v-model="user.password" type="text" placeholder="cpf" />
+        <input class="input" v-model="user.username" type="text" placeholder="usuário" />
+        <input class="input" v-model="user.password" type="text" placeholder="senha" />
       </div>
       <div class="button">
         <button @click="login">entrar</button>

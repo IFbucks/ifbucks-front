@@ -26,8 +26,8 @@
                 :pedido="pedido"
                 :entregar="entregar"
                 :excluir="excluir"
-                :v-show="pedido.entregue == false"
-                :v-if="pedidos.length !== 0"
+                v-show="pedido.entregue == false"
+                v-if="pedidos.length !== 0"
               />
 
               <tr v-if="pedidos.length === 0">
@@ -65,7 +65,6 @@ export default {
     async function entregar(id) {
       try {
 
-        //await axiosInstance.patch(`/pedidos/${id}/`, {
         await axiosInstance.patch(`https://ifbucks.1.ie-1.fl0.io/pedidos/${id}/`, {
           entregue: true
         })
@@ -73,11 +72,12 @@ export default {
         console.log(pedidos.value)
 
         pedidos.value = pedidos.value.map((pedido) => {
-          if (pedido.target.id === id) {
-            pedido.entregue = true
-          }
-          return pedido
+        if (pedido.id === id) {
+        pedido.entregue = true
+        }
+        return pedido
         })
+  
       } catch (e) {
         console.log(e)
       }
@@ -85,9 +85,8 @@ export default {
 
     async function excluir(id) {
       try {
-        //await axiosInstance.delete(`/pedidos/${id}/`)
         await axiosInstance.delete(`https://ifbucks.1.ie-1.fl0.io/pedidos/${id}/`)
-        this.pedidos = this.pedidos.filter((pedido) => pedido.id !== id)
+        pedidos.value = pedidos.value.filter((pedido) => pedido.id !== id)
       } catch (e) {
         console.log(e)
       }

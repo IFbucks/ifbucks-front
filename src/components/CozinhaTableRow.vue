@@ -23,7 +23,6 @@
 
 <script>
 import axiosInstance from '../axios/axiosInstance'
-
 import { ref, onMounted, computed } from 'vue'
 
 export default {
@@ -37,13 +36,15 @@ export default {
     const nome_items = ref([])
 
     async function getItems() {
-      const responses = await Promise.all(
-        props.pedido.items_pedidos.map(async (item) => {
-          const response = await axiosInstance.get(`/produtos/${item}/`)
-          return response.data.nome
-        })
-      )
-      nome_items.value = responses
+      if (props.pedido && props.pedido.items_pedidos) {
+        const responses = await Promise.all(
+          props.pedido.items_pedidos.map(async (item) => {
+            const response = await axiosInstance.get(`/produtos/${item}/`)
+            return response.data.nome
+          })
+        )
+        nome_items.value = responses
+      }
     }
 
     onMounted(() => {
@@ -56,6 +57,7 @@ export default {
   }
 }
 </script>
+
 
 <style>
 .items__lista {
